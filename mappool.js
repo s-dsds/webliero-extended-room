@@ -5,6 +5,13 @@ var currentMap = 0;
 var currentMapName = "";
 var currentMapSettings = null;
 
+function getMapUrl(name) {
+    if (name.substring(0,8)=='https://') {
+        return name;
+    }
+    return baseURL + '/' +  name;
+}
+
 function loadPool(name) {
 	(async () => {
 	mypool = await (await fetch(baseURL + '/' +  name)).json();
@@ -17,7 +24,7 @@ async function getMapData(mapUrl) {
       return obj;
     }
     try {
-        obj = await (await fetch(baseURL + '/' + mapUrl)).arrayBuffer();
+        obj = await (await fetch(mapUrl)).arrayBuffer();
     }catch(e) {
         return null;
     }
@@ -41,7 +48,7 @@ function next() {
 function loadMapByName(name) {
     console.log(name);
     (async () => {
-        let data = await getMapData(name);
+        let data = await getMapData(getMapUrl(name));
         if (data == null) {
             notifyAdmins(`map ${name} could not be loaded`)
             window.WLROOM.restartGame();
