@@ -46,7 +46,7 @@ mapSettings.set("wgetch/flag/bunker-flag.png",
             .addFlagSpawn(359, 168)
             .addFlagSpawn(359, 231)
             .addFlagSpawn(259, 231)
-            .addDefenseSpawn(784, 40)        
+            .addDefenseSpawn(784, 240)        
             .addAttackSpawn(1219, 294)
             .addAttackSpawn(1219, 376)
             .addAttackSpawn(1080, 256)
