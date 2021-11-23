@@ -15,7 +15,7 @@ mapSettings.set("wgetch/arena/chipper-arena.png", {
     haz: [[392,233,484,345]],
 })
 mapSettings.set("wgetch/zone/igloo-zone.png", {
-    haz: [[510,290,598,329]],
+    haz: [[512,293,598,329]],
 })
 mapSettings.set("wgetch/arena/snek-arena.png", 
     {
