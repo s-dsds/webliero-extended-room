@@ -14,6 +14,9 @@ mapSettings.set("wgetch/arena/eye-arena.png", {
 mapSettings.set("wgetch/arena/chipper-arena.png", {
     haz: [[392,233,484,345]],
 })
+mapSettings.set("wgetch/zone/igloo-zone.png", {
+    haz: [[510,290,598,329]],
+})
 mapSettings.set("wgetch/arena/snek-arena.png", 
     {
         dtf: [
@@ -30,6 +33,46 @@ mapSettings.set("wgetch/arena/snek-arena.png",
         ]
     }
 )
+mapSettings.set("wgetch/flag/bunker-flag.png", 
+    {
+        dtf: [
+            // spawn flag left
+            (new DTFSettings())
+            .addFlagSpawn(784, 236)
+            .addFlagSpawn(609, 340)
+            .addFlagSpawn(711, 350)
+            .addFlagSpawn(711, 315)
+            .addFlagSpawn(259, 168)   
+            .addFlagSpawn(359, 168)
+            .addFlagSpawn(359, 231)
+            .addFlagSpawn(259, 231)
+            .addDefenseSpawn(784, 40)        
+            .addAttackSpawn(1219, 294)
+            .addAttackSpawn(1219, 376)
+            .addAttackSpawn(1080, 256)
+        ]
+})
+mapSettings.set("wgetch/flag/passage-flag.png", 
+    {
+        dtf: [
+            // spawn flag left
+            (new DTFSettings())
+            .addFlagSpawn(236, 144)
+            .addFlagSpawn(418, 193)  
+            .addFlagSpawn(330, 194)  
+            .addDefenseSpawn(418, 193)        
+            .addDefenseSpawn(569, 176)        
+
+            .addAttackSpawn(812, 152)
+            .addAttackSpawn(812, 236)
+            .addAttackSpawn(713, 179)
+            .addAttackSpawn(713, 200)
+            .addAttackSpawn(608, 175)
+
+
+        ]
+})
+
 mapSettings.set("wgetch/flag/proton-flag.png", 
     {
         dtf: [
