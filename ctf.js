@@ -32,10 +32,6 @@ class CTFSettings {
         console.log("ctf clear")
         window.WLROOM.onPlayerKilled = null;
     }
-    onFlagPickup = () => {
-        this.#randomizeAllSpawns()
-       // window.WLROOM.setSpawn(0, ...randomItem(this.#spawns[0]))
-    }
     #randomizeAllSpawns= () => {
         for (let k in this.#spawns) {
             window.WLROOM.setSpawn(k, ...randomItem(this.#spawns[k]))
