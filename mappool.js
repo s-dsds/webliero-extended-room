@@ -82,6 +82,9 @@ function setModeBySettings(setting) {
         case "dtf":
             loadDTFsettings(s);
             break;
+        case "ctf":
+            loadCTFsettings(s);
+            break;
         default:
             break;
     }

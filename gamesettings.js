@@ -44,3 +44,18 @@ gameSettings.set("dm",
     teamsLocked: false,
 }
 );
+
+gameSettings.set("ctf",
+{
+    scoreLimit: 15,
+    timeLimit: 10,
+    loadingTimes: 0.4,
+    gameMode: "dtf",
+    levelPool: "arenasBest",
+    respawnDelay: 3,
+    bonusDrops: "health",
+    maxDuplicateWeapons: 0,
+    bonusSpawnFrequency: 6,
+    teamsLocked: false,
+}
+);

@@ -113,6 +113,24 @@ mapSettings.set("wgetch/flag/proton-flag.png",
         ]
     }
 )
+mapSettings.set("dsds/fortified_castles.png",{
+    ctf: [
+        // spawn flag left
+        (new CTFSettings())
+            .addFlagGreenSpawn(121, 194)   
+            //.addFlagSpawn(273, 500)
+
+            .addGreenSpawn(370, 189)
+            // .addDefenseSpawn(302, 422)
+            // .addDefenseSpawn(336, 666)
+            // .addDefenseSpawn(269, 312)
+            // .addDefenseSpawn(273, 500)
+
+            .addBlueSpawn(800, 222)
+            .addAttackSpawn(1146, 202)
+            //.addAttackSpawn(1120, 410),
+        ]
+})
 mapSettings.set("dsds/spaceshipint.png", 
     {
         dtf:[
