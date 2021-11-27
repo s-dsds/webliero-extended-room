@@ -127,7 +127,7 @@ mapSettings.set("dsds/fortified_castles.png",{
             // .addDefenseSpawn(273, 500)
 
             .addBlueSpawn(800, 222)
-            .addAttackSpawn(1146, 202)
+            .addFlagBlueSpawn(1146, 202)
             //.addAttackSpawn(1120, 410),
         ]
 })
