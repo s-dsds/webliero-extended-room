@@ -131,6 +131,24 @@ mapSettings.set("dsds/fortified_castles.png",{
             //.addAttackSpawn(1120, 410),
         ]
 })
+mapSettings.set("dsds/space_station.png",{
+    ctf: [
+        // spawn flag left
+        (new CTFSettings())
+            .addFlagGreenSpawn(337, 224)   
+            //.addFlagSpawn(273, 500)
+
+            .addGreenSpawn(546, 221)
+            // .addDefenseSpawn(302, 422)
+            // .addDefenseSpawn(336, 666)
+            // .addDefenseSpawn(269, 312)
+            // .addDefenseSpawn(273, 500)
+
+            .addBlueSpawn(897, 924)
+            .addFlagBlueSpawn(1183, 981)
+            //.addAttackSpawn(1120, 410),
+        ]
+})
 mapSettings.set("dsds/spaceshipint.png", 
     {
         dtf:[
