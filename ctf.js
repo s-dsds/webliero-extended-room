@@ -18,7 +18,7 @@ class CTFSettings {
     addFlagGreenSpawn=(x,y)=> {this.#addSpawn(0,x,y); return this;}
     addGreenSpawn=(x,y)=> {this.#addSpawn(1,x,y); return this;}
     addBlueSpawn=(x,y)=> {this.#addSpawn(2,x,y); return this;}
-    addFlagBlueSpawn=(x,y)=> {this.#addSpawn(0,x,y); return this;}
+    addFlagBlueSpawn=(x,y)=> {this.#addSpawn(3,x,y); return this;}
 
     startGame = () => {
         this.#randomizeAllSpawns()
@@ -29,7 +29,7 @@ class CTFSettings {
         }
     }
     endGame = () => {
-        console.log("dtf clear")
+        console.log("ctf clear")
         window.WLROOM.onPlayerKilled = null;
     }
     onFlagPickup = () => {
