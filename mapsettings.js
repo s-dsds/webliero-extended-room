@@ -50,7 +50,23 @@ mapSettings.set("wgetch/flag/bunker-flag.png",
             .addAttackSpawn(1219, 294)
             .addAttackSpawn(1219, 376)
             .addAttackSpawn(1080, 256)
-        ]
+        ],
+        ctf: [
+            // spawn flag left
+            (new CTFSettings())
+                .addFlagGreenSpawn(258, 169)   
+                //.addFlagSpawn(273, 500)
+    
+                .addGreenSpawn(711, 315)
+                // .addDefenseSpawn(302, 422)
+                // .addDefenseSpawn(336, 666)
+                // .addDefenseSpawn(269, 312)
+                // .addDefenseSpawn(273, 500)
+    
+                .addBlueSpawn(915, 360)
+                .addFlagBlueSpawn(1213, 297)
+                //.addAttackSpawn(1120, 410),
+            ]
 })
 mapSettings.set("wgetch/flag/passage-flag.png", 
     {
@@ -146,6 +162,60 @@ mapSettings.set("dsds/space_station.png",{
 
             .addBlueSpawn(897, 924)
             .addFlagBlueSpawn(1183, 981)
+            //.addAttackSpawn(1120, 410),
+        ]
+})
+mapSettings.set("wgetch/labs/jambon.png",{
+    ctf: [
+        // spawn flag left
+        (new CTFSettings())
+            .addFlagGreenSpawn(90, 500)   
+            //.addFlagSpawn(273, 500)
+
+            .addGreenSpawn(42, 388)
+            // .addDefenseSpawn(302, 422)
+            // .addDefenseSpawn(336, 666)
+            // .addDefenseSpawn(269, 312)
+            // .addDefenseSpawn(273, 500)
+
+            .addBlueSpawn(858, 388)
+            .addFlagBlueSpawn(810, 500)
+            //.addAttackSpawn(1120, 410),
+        ]
+})
+mapSettings.set("dsds/frog.png",{
+    ctf: [
+        // spawn flag left
+        (new CTFSettings())
+            .addFlagGreenSpawn(544, 83)   
+            //.addFlagSpawn(273, 500)
+
+            .addGreenSpawn(487, 51)
+            // .addDefenseSpawn(302, 422)
+            // .addDefenseSpawn(336, 666)
+            // .addDefenseSpawn(269, 312)
+            // .addDefenseSpawn(273, 500)
+
+            .addBlueSpawn(553, 972)
+            .addFlagBlueSpawn(510, 1016)
+            //.addAttackSpawn(1120, 410),
+        ]
+})
+mapSettings.set("kangaroo/JDM.png",{
+    ctf: [
+        // spawn flag left
+        (new CTFSettings())
+            .addFlagGreenSpawn(113, 118)   
+            //.addFlagSpawn(273, 500)
+
+            .addGreenSpawn(159, 72)
+            // .addDefenseSpawn(302, 422)
+            // .addDefenseSpawn(336, 666)
+            // .addDefenseSpawn(269, 312)
+            // .addDefenseSpawn(273, 500)
+
+            .addBlueSpawn(829, 487)
+            .addFlagBlueSpawn(770, 493)
             //.addAttackSpawn(1120, 410),
         ]
 })
