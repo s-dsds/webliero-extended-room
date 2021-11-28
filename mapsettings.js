@@ -126,7 +126,28 @@ mapSettings.set("wgetch/flag/proton-flag.png",
                 .addAttackSpawn(265, 511) 
                 .addAttackSpawn(265, 420) 
                 .addAttackSpawn(240, 666) 
-        ]
+        ],
+        ctf: [
+            (new CTFSettings())
+                .addFlagGreenSpawn(269, 312)   
+                .addFlagGreenSpawn(273, 500)
+
+                .addGreenSpawn(336, 155)
+                .addGreenSpawn(302, 422)                
+                .addGreenSpawn(269, 312)
+                .addGreenSpawn(273, 500)
+
+           
+                .addFlagBlueSpawn(985,258)   
+                .addFlagBlueSpawn(1074,535)
+
+
+                .addBlueSpawn(917,616)
+                .addBlueSpawn(928,234)
+                .addBlueSpawn(991,421)
+                .addBlueSpawn(1072,421)
+        ],
+        
     }
 )
 mapSettings.set("dsds/fortified_castles.png",{
