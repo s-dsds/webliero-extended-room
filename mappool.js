@@ -14,7 +14,7 @@ function getMapUrl(name) {
 
 function loadPool(name) {
 	(async () => {
-	mypool = await (await fetch(baseURL + '/' +  name)).json();
+	    mypool = await (await fetch(baseURL + '/' +  name)).json();
 	})();
 }
 
@@ -24,7 +24,7 @@ async function getMapData(mapUrl) {
       return obj;
     }
     try {
-        obj = await (await fetch(mapUrl)).arrayBuffer();
+        obj = await (await fetch(mapUrl)).arrayBuffer();        
     }catch(e) {
         return null;
     }
@@ -45,20 +45,33 @@ function next() {
     loadMapByName(currentMapName);
 }
 
+
 function loadMapByName(name) {
     console.log(name);
-    (async () => {
+    (async () => {        
         let data = await getMapData(getMapUrl(name));
         if (data == null) {
             notifyAdmins(`map ${name} could not be loaded`)
             window.WLROOM.restartGame();
-        } else if (name.split('.').pop()=="png") {    
+            return;
+        }
+        let sett =  mapSettings.get(name);
+
+        if (sett) {
+            loadPalette(name, (sett.palette===true)?await getPaletteDataFromImageData(name, data):sett.palette)          
+            loadMaterials(name, sett.materials)
+        } else {
+            loadPalette()
+            loadMaterials()
+        }
+
+        if (name.split('#').shift().split('.').pop()=="png") {    
             window.WLROOM.loadPNGLevel(name, data);
         } else {
             window.WLROOM.loadLev(name, data);
         }
-        if (mapSettings.has(name)) {
-            setModeBySettings(mapSettings.get(name))
+        if (sett) {
+            setModeBySettings(sett)
         } else {
             setDM()
         }
@@ -66,12 +79,15 @@ function loadMapByName(name) {
     })();
 }
 
-function randomItem(arr) {
+function randomItem(arr,not) {
+    if (not && not.length>0) {
+        arr = arr.filter((i)=>!not.includes(i))
+    }
     return arr[Math.floor(Math.random()*arr.length)];
 }
 function setModeBySettings(setting) {
     resetModes();
-    const mode = randomItem(Object.keys(setting)); // random mod if there are multiples
+    const mode = randomItem(Object.keys(setting),["materials","palette"]); // random mode if there are multiples, filters out "non game mode" properties
     window.WLROOM.setSettings(gameSettings.get(mode));
 
     const s = randomItem(setting[mode]); // random setting if there are multiples

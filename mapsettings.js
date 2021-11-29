@@ -30,9 +30,23 @@ mapSettings.set("wgetch/arena/snek-arena.png",
                 [1,242,92],
                 [2,645, 317],
               ]
-        ]
+        ]    
     }
 )
+// mapSettings.set("wgetch/arena/snek-arena.png#ctf", 
+//     {
+//         ctf: [
+//             (new CTFSettings())
+//                 .addFlagGreenSpawn(677, 309)   
+
+//                 .addGreenSpawn(659, 238)
+
+//                 .addBlueSpawn(242, 92)
+//                 .addFlagBlueSpawn(197, 164)
+//             ],
+//         materials: defaultMaterials.map(undefToDirt)        
+//     }
+// )
 mapSettings.set("wgetch/flag/bunker-flag.png", 
     {
         dtf: [
@@ -55,17 +69,11 @@ mapSettings.set("wgetch/flag/bunker-flag.png",
             // spawn flag left
             (new CTFSettings())
                 .addFlagGreenSpawn(258, 169)   
-                //.addFlagSpawn(273, 500)
     
                 .addGreenSpawn(711, 315)
-                // .addDefenseSpawn(302, 422)
-                // .addDefenseSpawn(336, 666)
-                // .addDefenseSpawn(269, 312)
-                // .addDefenseSpawn(273, 500)
-    
+
                 .addBlueSpawn(915, 360)
                 .addFlagBlueSpawn(1213, 297)
-                //.addAttackSpawn(1120, 410),
             ]
 })
 mapSettings.set("wgetch/flag/passage-flag.png", 
@@ -184,7 +192,9 @@ mapSettings.set("dsds/space_station.png",{
             .addBlueSpawn(897, 924)
             .addFlagBlueSpawn(1183, 981)
             //.addAttackSpawn(1120, 410),
-        ]
+        ],
+    palette: true,
+    materials: defaultMaterials.map(noUndef)
 })
 mapSettings.set("wgetch/labs/jambon.png",{
     ctf: [
@@ -202,7 +212,8 @@ mapSettings.set("wgetch/labs/jambon.png",{
             .addBlueSpawn(858, 388)
             .addFlagBlueSpawn(810, 500)
             //.addAttackSpawn(1120, 410),
-        ]
+        ],
+    materials: defaultMaterials.map(noUndef)
 })
 mapSettings.set("dsds/frog.png",{
     ctf: [
@@ -220,7 +231,8 @@ mapSettings.set("dsds/frog.png",{
             .addBlueSpawn(553, 972)
             .addFlagBlueSpawn(510, 1016)
             //.addAttackSpawn(1120, 410),
-        ]
+        ],
+    materials: defaultMaterials.map(noUndef)
 })
 mapSettings.set("kangaroo/JDM.png",{
     ctf: [
@@ -274,23 +286,6 @@ mapSettings.set("dsds/frog_cave_cave_only.png",
     }
 )
 
-mapSettings.set("hellhole/navarona.lev", 
-    {
-        dtf:[
-        [
-            [0,10,246],
-            [1,86,229],
-            [2,472, 36],
-        ],
-        [
-            [0,335,200],
-            [1,335,138],
-            [2,56,193],
-        ],
-     ] 
-    }
-)
-
 mapSettings.set("kangaroo/jetmen1+bunnyhop.png", 
     {
         dtf:[
@@ -304,7 +299,17 @@ mapSettings.set("kangaroo/jetmen1+bunnyhop.png",
             [1,305,168],
             [2,668,382],
         ],
-     ] 
+     ],
+     ctf: [
+            (new CTFSettings())
+                .addFlagGreenSpawn(651, 383)   
+
+                .addGreenSpawn(550, 479)
+
+                .addBlueSpawn(305, 168)
+                .addFlagBlueSpawn(140, 106)
+            ],
+        materials: defaultMaterials.map(noUndef)
     }
 )
 
@@ -341,7 +346,8 @@ mapSettings.set("dsds/weblieroZ/pilaf.png",
             [1,198,140],
             [2,894,456],
         ],
-     ] 
+     ],
+     materials: defaultMaterials.map(noUndef)
     }
 )
 

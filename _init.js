@@ -8,6 +8,9 @@ var commentsRef;
 var notifsRef;
 
 var commands;
+var palettes = new Map()
+
+var saveDefaultPalette = () => palettes.set("default", window.WLROOM.getPalette());
 
 (async function () {
 	console.log("Running Server...");
@@ -31,6 +34,8 @@ var commands;
 		teamsLocked: false,
 	});
 	window.WLROOM = room;
+
+    saveDefaultPalette()
 
 	room.onRoomLink = (link) => console.log(link);
 	room.onCaptcha = () => console.log("Invalid token");
