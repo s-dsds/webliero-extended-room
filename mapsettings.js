@@ -196,6 +196,30 @@ mapSettings.set("dsds/space_station.png",{
     palette: true,
     materials: defaultMaterials.map(noUndef)
 })
+mapSettings.set("dsds/weblieroZ/kameshouseint.png",{
+    ctf: [
+        // spawn flag left
+        (new CTFSettings())
+            .addFlagGreenSpawn(684, 262)   
+            .addFlagGreenSpawn(606, 234)
+            .addFlagGreenSpawn(377, 303)
+
+            .addGreenSpawn(318, 230)
+            .addGreenSpawn(398, 294)
+            .addGreenSpawn(606, 234)
+
+
+            .addBlueSpawn(723, 704)
+            .addBlueSpawn(660, 640)
+            .addBlueSpawn(634, 686)
+
+            .addFlagBlueSpawn(723,704)            
+            .addFlagBlueSpawn(660, 640)     
+            .addFlagBlueSpawn(692, 695)  
+        ],
+    palette: true,
+    materials: defaultMaterials.map(noUndef)
+})
 mapSettings.set("wgetch/labs/jambon.png",{
     ctf: [
         // spawn flag left
