@@ -20,6 +20,9 @@ mapSettings.set("wgetch/zone/igloo-zone.png", {
 mapSettings.set("wgetch/zone/inter-zone.png", {
     haz: [[497,255,553,288]],
 })
+mapSettings.set("wgetch/zone/light-zone.png", {
+    haz: [[269,209,348,255]],
+})
 mapSettings.set("wgetch/arena/snek-arena.png", 
     {
         dtf: [
@@ -127,6 +130,19 @@ mapSettings.set("wgetch/flag/passage-flag.png",
             .addAttackSpawn(608, 175)
 
 
+        ]
+})
+
+
+mapSettings.set("wgetch/flag/ambi-flag.png", 
+    {
+        ctf: [            
+            (new CTFSettings())
+            .addFlagGreenSpawn(267, 155) 
+            .addGreenSpawn(232, 175)                          
+
+            .addFlagBlueSpawn(481, 297)
+            .addBlueSpawn(515, 281)
         ]
 })
 
