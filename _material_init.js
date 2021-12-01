@@ -17,3 +17,7 @@ const defaultMaterials = [0, 9, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1,
 var noUndef = (i) => i!=MATERIAL.UNDEF?i:MATERIAL.ROCK
 
 var undefToDirt = (i) => i!=MATERIAL.UNDEF?i:MATERIAL.DIRT
+
+var _range = (start,end) => Array(end-start+1).fill(start).map((x, y) => x + y)
+
+var replaceMatIndexBy = (mat, ...indexes) => ((e,idx) => indexes.includes(idx)?mat:e)

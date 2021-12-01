@@ -87,7 +87,7 @@ function randomItem(arr,not) {
 }
 function setModeBySettings(setting) {
     resetModes();
-    const mode = randomItem(Object.keys(setting),["materials","palette"]); // random mode if there are multiples, filters out "non game mode" properties
+    const mode = randomItem(Object.keys(setting),["materials","palette","leds"]); // random mode if there are multiples, filters out "non game mode" properties
     window.WLROOM.setSettings(gameSettings.get(mode));
 
     const s = randomItem(setting[mode]); // random setting if there are multiples

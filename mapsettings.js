@@ -17,6 +17,9 @@ mapSettings.set("wgetch/arena/chipper-arena.png", {
 mapSettings.set("wgetch/zone/igloo-zone.png", {
     haz: [[512,293,598,329]],
 })
+mapSettings.set("wgetch/zone/inter-zone.png", {
+    haz: [[497,255,553,288]],
+})
 mapSettings.set("wgetch/arena/snek-arena.png", 
     {
         dtf: [
@@ -76,6 +79,36 @@ mapSettings.set("wgetch/flag/bunker-flag.png",
                 .addFlagBlueSpawn(1213, 297)
             ]
 })
+mapSettings.set("wgetch/arena/gallery-arena.png", 
+    {
+        ctf: [
+            // spawn flag left
+            (new CTFSettings())
+                .addFlagGreenSpawn(228, 49)
+                .addGreenSpawn(106, 133)
+                .addFlagGreenSpawn(226, 309)                  
+                .addGreenSpawn(114, 374)
+                .addFlagGreenSpawn(672, 309) 
+                .addGreenSpawn(794, 378)
+                .addFlagGreenSpawn(668, 49)  
+                .addGreenSpawn(794, 133)
+
+                .addFlagBlueSpawn(672, 309) 
+                .addBlueSpawn(794, 378)
+                .addFlagBlueSpawn(668, 49)  
+                .addBlueSpawn(794, 133)                
+                .addFlagBlueSpawn(228, 49)
+                .addBlueSpawn(106, 133)
+                .addFlagBlueSpawn(226, 309)                  
+                .addBlueSpawn(114, 374)
+ 
+
+
+                .setOrder(true)
+            ],
+        materials: defaultMaterials.map(noUndef)
+})
+
 mapSettings.set("wgetch/flag/passage-flag.png", 
     {
         dtf: [
@@ -218,7 +251,8 @@ mapSettings.set("dsds/weblieroZ/kameshouseint.png",{
             .addFlagBlueSpawn(692, 695)  
         ],
     palette: true,
-    materials: defaultMaterials.map(noUndef)
+    materials: defaultMaterials.map(noUndef),
+    leds: false
 })
 mapSettings.set("wgetch/labs/jambon.png",{
     ctf: [
@@ -240,7 +274,7 @@ mapSettings.set("wgetch/labs/jambon.png",{
     materials: defaultMaterials.map(noUndef),
     palette: new Uint8Array([0,0,0,108,56,0,108,80,0,164,148,128,0,144,0,247,128,0,252,84,84,168,168,168,85,85,85,84,84,252,255,161,4,255,235,88,120,64,8,128,68,8,136,72,12,144,80,16,152,84,20,160,88,24,172,96,28,76,76,76,84,84,84,92,92,92,100,100,100,109,109,109,116,116,116,125,125,125,132,132,132,220,125,153,148,148,148,157,157,157,56,56,136,81,81,193,105,105,249,145,145,245,185,185,245,110,110,110,145,145,145,181,181,181,217,217,217,32,96,32,45,133,45,62,174,62,255,150,76,255,178,142,111,111,111,146,146,146,182,182,182,218,218,218,168,168,248,208,208,244,255,226,219,60,80,0,88,112,0,116,144,0,148,176,0,120,72,52,157,121,89,197,169,125,237,217,161,235,92,167,255,132,199,255,174,212,200,100,0,160,80,0,72,72,72,108,108,108,147,147,147,180,180,180,216,216,216,253,253,253,255,177,210,144,144,144,152,60,0,180,100,0,208,140,0,236,180,0,168,84,0,217,1,1,189,1,1,165,1,1,200,0,0,172,0,0,218,2,2,190,2,2,166,2,2,255,0,251,234,0,222,207,0,196,82,82,194,106,106,250,146,146,246,80,80,192,107,107,251,147,147,247,149,137,1,136,124,0,124,112,0,116,100,0,132,92,40,160,132,72,188,176,104,216,220,136,248,248,188,244,244,252,253,1,1,248,24,4,255,0,251,255,0,244,248,108,20,248,136,24,248,164,32,248,192,36,248,220,40,245,233,61,244,244,80,244,244,112,244,244,148,240,240,180,240,240,212,255,226,219,46,134,46,63,175,63,114,190,114,47,135,47,64,176,64,115,191,115,255,35,255,244,124,124,255,172,246,104,104,248,148,148,248,184,184,244,144,144,244,65,177,65,116,192,116,164,212,164,112,188,112,148,136,0,136,116,0,124,96,0,112,76,0,100,56,0,89,41,1,137,108,151,144,144,192,188,188,248,200,200,244,220,220,244,40,112,40,44,132,44,52,152,52,60,172,60,252,200,200,245,165,165,248,92,92,245,77,77,244,60,60,244,76,76,244,92,92,244,164,164,92,119,102,89,128,103,80,136,100,72,150,100,11,21,5,28,64,42,29,59,40,22,37,13,252,252,252,221,221,221,189,189,189,158,158,158,124,124,124,156,156,156,188,188,188,220,220,220,108,76,44,124,84,48,140,96,56,156,108,64,172,120,72,0,0,0,40,36,8,80,76,20,120,116,28,160,152,40,200,192,48,244,232,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,254,2,2,252,36,0,252,72,0,252,108,0,252,144,0,252,180,0,252,216,0,252,252,0,168,240,0,84,232,0,0,224,0,252,0,0,232,4,20,249,0,255,196,20,68,180,24,88,160,32,112,144,40,136,124,44,156,108,52,180,88,60,204,72,68,228])
 })
-mapSettings.set("dsds/frog.png",{
+mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/frog_material_edit.png",{
     ctf: [
         // spawn flag left
         (new CTFSettings())
@@ -257,7 +291,8 @@ mapSettings.set("dsds/frog.png",{
             .addFlagBlueSpawn(510, 1016)
             //.addAttackSpawn(1120, 410),
         ],
-    materials: defaultMaterials.map(noUndef)
+    palette:true,
+    materials: defaultMaterials.map(noUndef).map(replaceMatIndexBy(MATERIAL.BG,..._range(189,208)))
 })
 mapSettings.set("kangaroo/JDM.png",{
     ctf: [
@@ -426,7 +461,43 @@ mapSettings.set("wgetch/flag/electron-flag.png",
             [1,255,284],           
             [2,830,345],
         ]
-     ] 
+     ],
+     ctf: [
+         
+         (new CTFSettings())
+             .addFlagGreenSpawn(346, 339)   
+ 
+             .addGreenSpawn(290, 232)
+             .addGreenSpawn(320, 343)
+             .addGreenSpawn(333, 502)
+
+
+             .addFlagBlueSpawn(842, 339)
+             .addBlueSpawn(877, 349)             
+             .addBlueSpawn(904, 238)
+             .addBlueSpawn(861, 503)
+
+
+         ],
+    materials: defaultMaterials.map(noUndef)
+    }
+)
+
+mapSettings.set("wgetch/flag/dens-flag.png", 
+    {
+     ctf: [
+         
+         (new CTFSettings())
+             .addFlagGreenSpawn(274, 217)   
+ 
+             .addGreenSpawn(309, 210)
+
+
+             .addBlueSpawn(380, 418)
+             .addFlagBlueSpawn(429, 429)             
+
+         ],
+    materials: defaultMaterials.map(noUndef)
     }
 )
 
