@@ -6,6 +6,14 @@ window.WLROOM.onGameEnd2 = function() {
 	next();
 }
 
+window.WLROOM.onGameStart = () => {
+    console.log("--------------start")
+    if (loadMe) {
+        createObjects(loadMe)
+        loadMe = null;
+    }
+}
+
 function announce(msg, player, color, style) {
 	window.WLROOM.sendAnnouncement(msg, typeof player =='undefined' || player == null?null:player.id, color!=null?color:0xb2f1d3, style !=null?style:"", 1);
 }

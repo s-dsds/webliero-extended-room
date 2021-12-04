@@ -5,7 +5,8 @@ function loadMaterials(name, data) {
         loadMaterials("default", defaultMaterials)
         return
     }
-    if (name!=currentMat) {        
+    if (name!=currentMat) {    
+        console.log(JSON.stringify(data))    
         window.WLROOM.setMaterials(data)
         currentMat = name        
     }    

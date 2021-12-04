@@ -6,7 +6,7 @@ const MATERIAL = {
     BG: 8,
     BG_DIRT: 9,
     BG_DIRT_2: 10,
-    BG_SEEDSHADOW: 24,
+    BG_SEESHADOW: 24,
     WORM: 32,
 }
 

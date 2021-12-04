@@ -22,7 +22,80 @@ mapSettings.set("wgetch/zone/inter-zone.png", {
 })
 mapSettings.set("wgetch/zone/light-zone.png", {
     haz: [[269,209,348,255]],
+    objects: [
+        {type:"lava", x:229, y:354},
+        {type:"lava", x:242, y:354},
+        {type:"lava", x:257, y:354},
+        {type:"lava", x:271, y:354},
+        {type:"lava", x:287, y:354},
+        {type:"lava", x:291, y:354},
+        {type:"lava", x:307, y:354},
+        {type:"lava", x:320, y:354},
+        {type:"lava", x:334, y:354},
+        {type:"lava", x:350, y:354},
+        {type:"lava", x:361, y:354},
+        {type:"lava", x:373, y:354},
+        {type:"lava", x:388, y:354},
+    ],
+    materials: defaultMaterials.map(noUndef)
 })
+mapSettings.set("pilaf/hole.png", {
+    pred: [[341,256]],
+    objects: [
+        {type:"lava", x:174, y:616},
+        {type:"lava", x:186, y:622},
+        {type:"lava", x:195, y:628},
+        {type:"lava", x:208, y:635},
+        {type:"lava", x:222, y:645},
+        {type:"lava", x:237, y:652},
+        {type:"lava", x:252, y:658},
+        {type:"lava", x:270, y:665},
+        {type:"lava", x:287, y:668},
+        {type:"lava", x:299, y:672},
+        {type:"lava", x:316, y:670},
+        {type:"lava", x:330, y:672},
+        {type:"lava", x:345, y:668},
+        {type:"lava", x:360, y:670},
+        {type:"lava", x:380, y:666},
+        {type:"lava", x:395, y:670},
+        {type:"lava", x:411, y:666},
+        {type:"lava", x:425, y:663},
+        {type:"lava", x:435, y:659},
+        {type:"lava", x:450, y:655},
+        {type:"lava", x:467, y:650},
+        {type:"lava", x:480, y:640},
+        {type:"lava", x:495, y:639},
+        {type:"lava", x:515, y:629},               
+        {type:"lava", x:536, y:621},
+        {type:"lava", x:542, y:616},
+    ],
+    materials: defaultMaterials.map(replaceMatIndexBy(MATERIAL.ROCK,0, 155, 141,142,182,183))
+})
+mapSettings.set("piebaron/PieBaron_BR_pokolTribut_v0.lev", {
+    pred: [[504,109]],
+    expand:true
+})
+mapSettings.set("pilaf/g3a.png", {
+    pred: [[200,200]],
+})
+mapSettings.set("dsds/squigglyswiggly/squig_fourth.png", {
+    pred: [[238,58]],
+    materials: defaultMaterials.map(noUndef)
+})
+mapSettings.set("pilaf/axiom.lev", {
+    pred: [[504,119]],
+    expand:true
+})
+
+mapSettings.set("piebaron/fArtefact_00.png", 
+    {
+        pred:[[256,187]],
+       /* objects: [ // needs to parse png to add thick stone layer
+            {type:"lava", x:40, y:1940},
+        ]*/
+    }
+)
+
 mapSettings.set("wgetch/arena/snek-arena.png", 
     {
         dtf: [
@@ -267,8 +340,8 @@ mapSettings.set("dsds/weblieroZ/kameshouseint.png",{
             .addFlagBlueSpawn(692, 695)  
         ],
     palette: true,
-    materials: defaultMaterials.map(noUndef),
-    leds: false
+    materials: defaultMaterials.map(noUndef).map(replaceMatIndexBy(MATERIAL.BG,1,2)),
+    colorAnim: false
 })
 mapSettings.set("wgetch/labs/jambon.png",{
     ctf: [
@@ -362,7 +435,90 @@ mapSettings.set("dsds/frog_cave_cave_only.png",
     }
 )
 
-mapSettings.set("kangaroo/jetmen1+bunnyhop.png", 
+mapSettings.set("kangaroo/JetmenRevival/GardenSmall.png", 
+    {      
+     ctf: [
+            (new CTFSettings())
+                .addFlagBlueSpawn(219, 648)   
+
+                .addBlueSpawn(148, 482)
+                .addBlueSpawn(290, 485)
+                .addBlueSpawn(219, 600)
+                .addBlueSpawn(129, 646)
+
+                .addFlagGreenSpawn(585, 648)
+                .addGreenSpawn(477, 477)
+                .addGreenSpawn(638, 490)
+                .addGreenSpawn(679, 646)
+                .addGreenSpawn(585, 600)
+                
+            ],
+    }
+)
+
+mapSettings.set("kangaroo/JetmenRevival/LunarDigSmall.png", 
+    {      
+     ctf: [
+            (new CTFSettings())
+                .addFlagBlueSpawn(723, 733)   
+                .addBlueSpawn(723, 733)   
+                .addFlagBlueSpawn(277, 122) 
+                .addBlueSpawn(277, 122)        
+
+                .addFlagGreenSpawn(277, 122)
+                .addGreenSpawn(277, 122)
+                .addFlagGreenSpawn(723, 733)  
+                .addGreenSpawn(723, 733)  
+                
+                .setOrder(true)
+            ],
+    }
+)
+
+mapSettings.set("kangaroo/JetmenRevival/MountDoomSmall.png", 
+    {      
+     ctf: [
+            (new CTFSettings())
+                .addFlagBlueSpawn(73, 114)   
+                .addBlueSpawn(73, 114)        
+                .addFlagBlueSpawn(26, 264)   
+                .addBlueSpawn(26, 264)
+                .addFlagBlueSpawn(167, 562)   
+                .addBlueSpawn(167, 562)
+
+                .addFlagGreenSpawn(699, 514)
+                .addGreenSpawn(699, 514)
+                .addFlagGreenSpawn(735, 95)
+                .addGreenSpawn(735, 95)
+                .addFlagGreenSpawn(769, 258)
+                .addGreenSpawn(769, 258)
+                .setOrder(CTFSettings.ORDER.RANDOM_SAME_INDEX)
+            ],
+    }
+)
+
+mapSettings.set("kangaroo/JetmenRevival/PostNukeSmall.png", 
+    {      
+     ctf: [
+            (new CTFSettings())
+                .addFlagBlueSpawn(178, 157)   
+                .addBlueSpawn(178, 157)    
+                .addFlagBlueSpawn(79, 523)   
+                .addBlueSpawn(79, 523)  
+     
+
+                .addFlagGreenSpawn(549, 337)
+                .addGreenSpawn(549, 337)
+                .addFlagGreenSpawn(713, 525)
+                .addGreenSpawn(713, 525)
+        
+                .setOrder(CTFSettings.ORDER.RANDOM_SAME_INDEX)
+            ],
+    }
+)
+
+
+mapSettings.set("kangaroo/JetmenRevival/CaveDot.png", 
     {
         dtf:[
         [
@@ -378,14 +534,15 @@ mapSettings.set("kangaroo/jetmen1+bunnyhop.png",
      ],
      ctf: [
             (new CTFSettings())
-                .addFlagGreenSpawn(651, 383)   
+                .addFlagBlueSpawn(651, 383)   
 
-                .addGreenSpawn(550, 479)
+                .addBlueSpawn(550, 479)
 
-                .addBlueSpawn(305, 168)
-                .addFlagBlueSpawn(140, 106)
+                .addGreenSpawn(305, 168)
+                .addFlagGreenSpawn(140, 106)
             ],
-        materials: defaultMaterials.map(noUndef)
+        materials: defaultMaterials.map(noUndef),
+        colorAnim: false
     }
 )
 
@@ -428,17 +585,6 @@ mapSettings.set("dsds/weblieroZ/pilaf.png",
 )
 
 
-mapSettings.set("piebaron/fArtefact_00.png", 
-    {
-        dtf:[
-        [
-            [0,316,11],
-            [1,257,187],
-            [2,338,1410],
-        ]
-     ] 
-    }
-)
 
 
 mapSettings.set("qmaps/qmap20.png", 
@@ -452,7 +598,7 @@ mapSettings.set("qmaps/qmap20.png",
      ] 
     }
 )
-
+/*
 mapSettings.set("qmaps/qmap15.png", 
     {
         dtf:[
@@ -464,6 +610,7 @@ mapSettings.set("qmaps/qmap15.png",
      ] 
     }
 )
+*/
 mapSettings.set("wgetch/flag/electron-flag.png", 
     {
         dtf:[
@@ -518,4 +665,6 @@ mapSettings.set("wgetch/flag/dens-flag.png",
 )
 
 var mypool = Array.from(mapSettings.keys());
+var mypoolIdx = [...mypool];
+
 shuffleArray(mypool)

@@ -5,6 +5,8 @@ var currentMap = 0;
 var currentMapName = "";
 var currentMapSettings = null;
 
+var loadMe = null;
+
 function getMapUrl(name) {
     if (name.substring(0,8)=='https://') {
         return name;
@@ -46,8 +48,8 @@ function next() {
 }
 
 
-function loadMapByName(name) {
-    console.log(name);
+function loadMapByName(name, mode) {
+    console.log(name, mode);
     (async () => {        
         let data = await getMapData(getMapUrl(name));
         if (data == null) {
@@ -56,7 +58,7 @@ function loadMapByName(name) {
             return;
         }
         let sett =  mapSettings.get(name);
-
+        setExpand(sett.expand || (sett.expandable && shouldExpand()));
         if (sett) {
             loadPalette(name, (sett.palette===true)?await getPaletteDataFromImageData(name, data):sett.palette)          
             loadMaterials(name, sett.materials)
@@ -71,29 +73,83 @@ function loadMapByName(name) {
             window.WLROOM.loadLev(name, data);
         }
         if (sett) {
-            setModeBySettings(sett)
+            setModeBySettings(sett, mode)
         } else {
             setDM()
         }
-        window.WLROOM.restartGame();
+        
+        if (sett.objects) {
+            loadMe = sett.objects
+        }
+    
+        window.WLROOM.restartGame()
     })();
+}
+// l(a) { // pack message
+//     a.g(1); // message version
+//     a.g(this.act || 0); // action (create/edit)
+//     a.g(this.type || 0); // wobjects
+//     a.g(this.id || 0); // custom particle id
+//     a.g(this.owner===undefined?-1:this.owner); // worm owner id
+//     a.g(this.weapon || 0); // weapon id for definition
+//     a.g(this.angle || 0); // angle
+//     a.g(this.speed || 0); // speed
+//     a.g(this.x || 0); // x
+//     a.g(this.y || 0); // y 
+//     a.g(this.vx || 0); // velocity x
+//     a.g(this.vy || 0); // velocity y	
+function createObjects(objects) {
+    if (objects) {
+        console.log("create objects")
+        objects.forEach(createObject)
+        
+    }
+}
+function createObject(obj) {  
+    console.log("create ", JSON.stringify({weapon:56, x:obj.x, y:obj.y}))  
+    window.WLROOM.createObject({weapon:56, x:obj.x, y:obj.y})
+}
+function setExpand(expand) {
+    let sets = window.WLROOM.getSettings();
+    if (sets.expandLevel!=expand) {
+        sets.expandLevel=expand;
+        window.WLROOM.setSettings(sets);
+    }
+}
+function shouldExpand() {
+    if (autoExpand==-1) {
+        return false;
+    }
+    return (getActivePlayers().length>=autoExpand);
 }
 
 function randomItem(arr,not) {
     if (not && not.length>0) {
         arr = arr.filter((i)=>!not.includes(i))
     }
-    return arr[Math.floor(Math.random()*arr.length)];
+    return arr[randomIdx(arr)];
 }
-function setModeBySettings(setting) {
+
+function randomIdx(arr) {
+    return Math.floor(Math.random()*arr.length);
+}
+
+function setModeBySettings(setting, mode) {
     resetModes();
-    const mode = randomItem(Object.keys(setting),["materials","palette","leds"]); // random mode if there are multiples, filters out "non game mode" properties
+    if (!mode || !setting[mode]) {
+        mode = randomItem(Object.keys(setting),["materials","palette","colorAnim","expandable", "expand", "objects"]); // random mode if there are multiples, filters out "non game mode" properties
+    }    
+    console.log("loading mode "+mode)
     window.WLROOM.setSettings(gameSettings.get(mode));
 
     const s = randomItem(setting[mode]); // random setting if there are multiples
     switch (mode) {
         case "haz":
             window.WLROOM.setZone(...s)
+            break;
+        case "pred":
+            console.log("pred", ...s)
+            window.WLROOM.setSpawn(0,...s)
             break;
         case "dtf":
             loadDTFsettings(s);
@@ -129,13 +185,23 @@ function shuffle() {
     shuffleArray(pool);
 }
 
+function hasGameMode(name, mode) {
+    let sett =  mapSettings.get(name)
+    if (!sett) {
+        return false
+    }
+    return typeof sett[mode] != undefined && sett[mode]!==false
+}
 
-COMMAND_REGISTRY.add("map", ["!map #mapname#: load lev map from gitlab webliero.gitlab.io"], (player, ...name) => {
-    let n = name.join(" ").trim();
-    if (n == "") {
+COMMAND_REGISTRY.add("map", ["!map #mapname# #gamemode#: load lev map from gitlab webliero.gitlab.io"], (player, name, gamemode) => {    
+    if (!name) {
         announce("map name is empty ",player, 0xFFF0000);
     }
-    currentMapName = n;
+    if (gamemode && !hasGameMode(name, gamemode)) {
+        announce("this game mode isn't set for this map yet sorry",player, 0xFFF0000);
+        return false;
+    }
+    currentMapName = name;
     loadMapByName(currentMapName);
     return false;
 }, true);
@@ -146,6 +212,7 @@ COMMAND_REGISTRY.add(["r", "restart"], ["!restart or !r: restarts game"], (playe
     return false;
 }, true);
 
+/*
 COMMAND_REGISTRY.add("addmap", ["!addmap #mapname#: adds lev map from gitlab webliero.gitlab.io to pool"], (player, ...name) => {
     let n = name.join(" ").trim();
     if (n == "") {
@@ -171,14 +238,24 @@ COMMAND_REGISTRY.add("delmap", ["!delmap #mapname#: removes lev map from gitlab 
     announce(`${n} removed from the pool`, player, 0xFFF0000);
     return false;
 }, true);
+*/
 
-COMMAND_REGISTRY.add("mapi", ["!mapi #index#: load map by pool index"], (player, idx) => {
+COMMAND_REGISTRY.add("mapi", ["!mapi #index# #gamemode#: load map by pool index"], (player, idx, gamemode) => {    
     if (typeof idx=="undefined" || idx=="" || isNaN(idx) || idx>=mypool.length) {
         announce("wrong index, choose any index from 0 to "+(mypool.length-1),player, 0xFFF0000);
+        mypoolIdx.forEach((mname, midx) => {
+            announce(`!mapi ${midx} ${mname}`, player, 0xA7CCC4, "smaller");
+        });
         return false;
     }
-    currentMapName = mypool[idx];
-    loadMapByName(currentMapName);
+    const name = mypoolIdx[idx]
+
+    if (gamemode && !hasGameMode(name)) {
+        announce("this game mode isn't set for this map yet sorry",player, 0xFFF0000);
+        return false;
+    }
+    currentMapName = name
+    loadMapByName(currentMapName, gamemode);
     return false;
 }, true);
 
