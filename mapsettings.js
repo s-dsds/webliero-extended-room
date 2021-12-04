@@ -665,6 +665,6 @@ mapSettings.set("wgetch/flag/dens-flag.png",
 )
 
 var mypool = Array.from(mapSettings.keys());
-var mypoolIdx = [...mypool];
+var mypoolIdx = [...mypool.sort()];
 
 shuffleArray(mypool)
