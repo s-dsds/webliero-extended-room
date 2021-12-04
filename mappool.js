@@ -105,9 +105,19 @@ function createObjects(objects) {
         
     }
 }
+
 function createObject(obj) {  
-    console.log("create ", JSON.stringify({weapon:56, x:obj.x, y:obj.y}))  
-    window.WLROOM.createObject({weapon:56, x:obj.x, y:obj.y})
+    console.log("create ", JSON.stringify({type:1,wobject:getWObject(obj.type), x:obj.x, y:obj.y, vx: obj.vx || 0, vy: obj.vy || 0, speed: obj.speed || 0})   )   
+    window.WLROOM.createObject({type:1,wobject:getWObject(obj.type), x:obj.x, y:obj.y, vx: obj.vx || 0, vy: obj.vy || 0, speed: obj.speed || 0})
+}
+
+function getWObject(type) {
+    switch (type) { 
+        case "lava":
+            return 56;
+        case "platform":
+            return 57;
+    }
 }
 function setExpand(expand) {
     let sets = window.WLROOM.getSettings();

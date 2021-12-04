@@ -3,6 +3,14 @@ var mapSettings = new Map();
 // micro-arena.png: 411,331,488,363
 // eye-arena.png: 395,206,505,316
 // chipper-arena.png: 392,233,484,345
+
+// mapSettings.set("https://127.0.0.1/maps/test_dirt.png", {
+//     pred: [[504,109]],
+//     layers: {
+//         clean_background: "https://127.0.0.1/maps/test_sub.png"
+//     }
+// })
+
 mapSettings.set("wgetch/arena/micro-arena.png", {
     haz: [[411,331,488,363]],
 })
@@ -36,6 +44,8 @@ mapSettings.set("wgetch/zone/light-zone.png", {
         {type:"lava", x:361, y:354},
         {type:"lava", x:373, y:354},
         {type:"lava", x:388, y:354},
+       // {type:"platform", x:245, y:491},
+
     ],
     materials: defaultMaterials.map(noUndef)
 })
