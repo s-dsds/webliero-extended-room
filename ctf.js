@@ -64,8 +64,8 @@ class CTFSettings {
     }
 
     #nextSpawnsForward = () => {
-        for (let k in this.#orders) {
-            this.#orders[k] = (this.#orders[k]>=1-this.#spawns[k].length)? 0 : this.#orders[k] + 1
+        for (let k in this.#orders) {          
+            this.#orders[k] = (this.#orders[k]>=this.#spawns[k].length-1)? 0 : this.#orders[k] + 1            
             window.WLROOM.setSpawn(k, ...this.#spawns[k][this.#orders[k]])
         } 
     }
