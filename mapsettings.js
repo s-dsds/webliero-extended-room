@@ -11,6 +11,14 @@ var mapSettings = new Map();
 //     }
 // })
 
+// mapSettings.set("https://127.0.0.1/maps/test_dirt.png#t2", {
+//     pred: [[504,109]],
+//     layers: {
+//         clean_background: true
+//     }
+// })
+
+
 mapSettings.set("wgetch/arena/micro-arena.png", {
     haz: [[411,331,488,363]],
 })
@@ -31,19 +39,19 @@ mapSettings.set("wgetch/zone/inter-zone.png", {
 mapSettings.set("wgetch/zone/light-zone.png", {
     haz: [[269,209,348,255]],
     objects: [
-        {type:"lava", x:229, y:354},
-        {type:"lava", x:242, y:354},
-        {type:"lava", x:257, y:354},
-        {type:"lava", x:271, y:354},
-        {type:"lava", x:287, y:354},
-        {type:"lava", x:291, y:354},
-        {type:"lava", x:307, y:354},
-        {type:"lava", x:320, y:354},
-        {type:"lava", x:334, y:354},
-        {type:"lava", x:350, y:354},
-        {type:"lava", x:361, y:354},
-        {type:"lava", x:373, y:354},
-        {type:"lava", x:388, y:354},
+        {type:"lava", x:229, y:334},
+        {type:"lava", x:242, y:334},
+        {type:"lava", x:257, y:334},
+        {type:"lava", x:271, y:334},
+        {type:"lava", x:287, y:334},
+        {type:"lava", x:291, y:334},
+        {type:"lava", x:307, y:334},
+        {type:"lava", x:320, y:334},
+        {type:"lava", x:334, y:334},
+        {type:"lava", x:350, y:334},
+        {type:"lava", x:361, y:334},
+        {type:"lava", x:373, y:334},
+        {type:"lava", x:388, y:334},
        // {type:"platform", x:245, y:491},
 
     ],
@@ -99,10 +107,64 @@ mapSettings.set("pilaf/axiom.lev", {
 
 mapSettings.set("piebaron/fArtefact_00.png", 
     {
-        pred:[[256,187]],
-       /* objects: [ // needs to parse png to add thick stone layer
-            {type:"lava", x:40, y:1940},
-        ]*/
+        pred:[
+            (new PredSettings())
+            .addLemonSpawn(256,187)
+            .addWormSpawn(318, 1870)
+            .addWormSpawn(117, 1756)
+            .addWormSpawn(340, 1667)
+            .addWormSpawn(174, 1676)
+            .addWormSpawn(222, 1656)
+            .addWormSpawn(178, 1554)
+            .addWormSpawn(225, 1554)
+            .addWormSpawn(143, 1489)
+            .addWormSpawn(327, 1489)
+            .addWormSpawn(186, 1422)
+            .addWormSpawn(340, 1420)
+            .addWormSpawn(108, 1351)
+            .addWormSpawn(181, 1319)
+            .addWormSpawn(366, 1319)
+            .addWormSpawn(395, 1270)
+            .addWormSpawn(347, 1218)
+            .addWormSpawn(122, 1115)
+            .addWormSpawn(379, 1073)
+            .addWormSpawn(134, 1028)
+            .addWormSpawn(372, 969)
+            .addWormSpawn(372, 969)
+            .addWormSpawn(110, 892)
+            .addWormSpawn(400, 800)
+            .addWormSpawn(80, 760)
+            .addWormSpawn(425, 690)
+            .addWormSpawn(60, 600)
+            .addWormSpawn(450, 530)
+            .addWormSpawn(111, 403)
+            .addWormSpawn(410, 265)
+            .addWormSpawn(256, 189)
+            .addWormSpawn(458, 73)
+            .addWormSpawn(313, 10)
+            .setOrder(PredSettings.ORDER.LOOP_LAST_FOUR)
+        ],
+        objects: (() => {
+            let obj = []
+            
+            for (let x = 10; x<=500;x+=35) {
+                obj.push({type:"lava", x:x, y:1910})
+            }
+            return obj
+         })(),
+         objectsSteps: (() => {        
+            let steps = [10]
+    
+            for (let y = 1878; y>=1020;y-=32) {
+                let step = []
+                for (let x = 10; x<=500;x+=35) {
+                    step.push({type:"lava", x:x, y:y})
+                }
+                steps.push(step)
+            }
+    
+            return steps
+         })()
     }
 )
 
@@ -226,6 +288,23 @@ mapSettings.set("wgetch/flag/ambi-flag.png",
 
             .addFlagBlueSpawn(481, 297)
             .addBlueSpawn(515, 281)
+        ]
+})
+
+mapSettings.set("wgetch/flag/ambi150-flag.png", 
+    {
+        ctf: [            
+            (new CTFSettings())
+            .addFlagGreenSpawn(293, 170) 
+            .addGreenSpawn(257, 190)
+            .addFlagGreenSpawn(645, 189) 
+            .addGreenSpawn(626, 171)                          
+
+            .addFlagBlueSpawn(616, 387)
+            .addBlueSpawn(540, 421)
+            .addFlagBlueSpawn(261, 421)
+            .addBlueSpawn(279, 396)
+            .setOrder(true)
         ]
 })
 
@@ -561,18 +640,37 @@ mapSettings.set("kangaroo/JetmenRevival/CaveDot.png",
 mapSettings.set("PiPitek/SHAARK4.png", 
     {
         dtf:[
-        [
-            [0,36,173],
-            [1,39,144],
-            [2,486,150],
-        ],
-        [
-            [0,486,150],
-            [1,447,114],
-            [2,59,337],
-        ],
-     ] 
-    }
+        (new DTFSettings())
+            .addFlagSpawn(36,173)
+            .addDefenseSpawn(39,144)
+            .addAttackSpawn(486,150),
+        (new DTFSettings())
+            .addFlagSpawn(486,150)
+            .addDefenseSpawn(447,114)
+            .addAttackSpawn(59,337),
+     ],
+     objects: (() => {
+        let obj = [{type:"water", x:60, y:340}]
+        
+        for (let x = 70; x<469;x+=35) {
+            obj.push({type:"water", x:x, y:340})
+        }
+        return obj
+     })(),
+     objectsSteps: (() => {        
+        let steps = [30]
+
+        for (let y = 340; y>=200;y-=20) {
+            let step = []
+            for (let x = 0; x<504;x+=35) {
+                step.push({type:"water", x:x, y:y})
+            }
+            steps.push(step)
+        }
+
+        return steps
+     })()
+    },
 )
 
 
@@ -668,6 +766,56 @@ mapSettings.set("wgetch/flag/dens-flag.png",
 
              .addBlueSpawn(380, 418)
              .addFlagBlueSpawn(429, 429)             
+
+         ],
+    materials: defaultMaterials.map(noUndef)
+    }
+)
+mapSettings.set("wgetch/flag/forts-flag.png", 
+    {
+     ctf: [
+         
+         (new CTFSettings())
+             .addBlueSpawn(269, 208)
+             .addBlueSpawn(354, 255)
+             .addBlueSpawn(380, 207)
+             .addBlueSpawn(362, 296)
+             .addBlueSpawn(429, 336)
+             .addBlueSpawn(332, 357)
+             .addBlueSpawn(364, 337)
+             .addBlueSpawn(322, 414)
+             .addBlueSpawn(426, 415)
+             .addBlueSpawn(475, 166)
+             .addBlueSpawn(462, 293)
+             .addBlueSpawn(395, 376)
+             .addBlueSpawn(252, 396)
+             .addFlagBlueSpawn(246, 252)             
+             .addFlagBlueSpawn(252, 295)             
+             .addFlagBlueSpawn(252, 334)             
+             .addFlagBlueSpawn(228, 407)             
+             .addFlagBlueSpawn(492, 218)             
+             .addFlagBlueSpawn(492, 255)             
+             .addFlagBlueSpawn(429, 330)    
+             .addGreenSpawn(925, 208)
+             .addGreenSpawn(840, 255)
+             .addGreenSpawn(814, 207)
+             .addGreenSpawn(832, 296)
+             .addGreenSpawn(765, 336)
+             .addGreenSpawn(861, 357)
+             .addGreenSpawn(829, 337)
+             .addGreenSpawn(872, 414)
+             .addGreenSpawn(768, 415)
+             .addGreenSpawn(718, 166)
+             .addGreenSpawn(732, 293)
+             .addGreenSpawn(798, 376)
+             .addGreenSpawn(941, 396)
+             .addFlagBlueSpawn(948, 252)             
+             .addFlagBlueSpawn(941, 295)             
+             .addFlagBlueSpawn(941, 334)             
+             .addFlagBlueSpawn(963, 407)             
+             .addFlagBlueSpawn(701, 218)             
+             .addFlagBlueSpawn(701, 255)             
+             .addFlagBlueSpawn(765, 330)           
 
          ],
     materials: defaultMaterials.map(noUndef)

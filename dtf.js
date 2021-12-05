@@ -53,6 +53,8 @@ class DTFSettings {
     setOrder = (order) => {this.#order=order; return this;}
 
     startGame = () => {
+        console.log("starting dtf")
+        this.#orders = [-1,-1,-1]
         this.onFlagPickup()
     }
     

@@ -29,6 +29,7 @@ class CTFSettings {
 
     startGame = () => {
         console.log("starting ctf")
+        this.#orders = [-1,-1,-1,-1]
         this.onFlagScore()
     }
     endGame = () => {

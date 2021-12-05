@@ -5,6 +5,13 @@ window.WLROOM.onPlayerLeave = function(player) {
 window.WLROOM.onGameEnd2 = function() {
 	next();
 }
+window.WLROOM.onGameEnd = function() {
+    console.log("--------------end")
+	if (objectStepTimeoutId) {
+        objectsSteps=[];
+        clearTimeout(objectStepTimeoutId)
+    }
+}
 
 window.WLROOM.onGameStart = () => {
     console.log("--------------start")

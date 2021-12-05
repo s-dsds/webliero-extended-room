@@ -6,6 +6,8 @@ var currentMapName = "";
 var currentMapSettings = null;
 
 var loadMe = null;
+var objectsSteps = []
+var objectStepTimeoutId
 
 function getMapUrl(name) {
     if (name.substring(0,8)=='https://') {
@@ -67,8 +69,13 @@ function loadMapByName(name, mode) {
             loadMaterials()
         }
 
-        if (name.split('#').shift().split('.').pop()=="png") {    
-            window.WLROOM.loadPNGLevel(name, data);
+        if (name.split('#').shift().split('.').pop()=="png") {  
+            // let bg = (sett && sett.layers && set.layers.clean_background)  
+            // let bgdata = null
+            // if (bg && set.layers.clean_background!==true) {
+            //      bgdata = await getMapData(getMapUrl(set.layers.clean_background));
+            // }
+            window.WLROOM.loadPNGLevel(name, data/*, bg, bgdata*/);
         } else {
             window.WLROOM.loadLev(name, data);
         }
@@ -78,12 +85,29 @@ function loadMapByName(name, mode) {
             setDM()
         }
         
-        if (sett.objects) {
+        if (sett.objects) { // initial objects
             loadMe = sett.objects
         }
-    
+
+        objectsSteps = sett.objectsSteps ? [...sett.objectsSteps]: false
+        if (objectsSteps) {
+            let timeout = objectsSteps.shift()
+            objectStepTimeoutId = setTimeout(objectStepShift, 1000*timeout)
+        }
         window.WLROOM.restartGame()
     })();
+}
+
+function objectStepShift() {
+    console.log("advance object step")
+    if (objectsSteps && objectsSteps.length>0) {
+        let step = objectsSteps.shift()
+        createObjects(step)
+
+        if (objectsSteps.length>0) {
+            objectStepTimeoutId = setTimeout(objectStepShift, 1000*1)
+        }
+    }
 }
 // l(a) { // pack message
 //     a.g(1); // message version
@@ -107,7 +131,7 @@ function createObjects(objects) {
 }
 
 function createObject(obj) {  
-    console.log("create ", JSON.stringify({type:1,wobject:getWObject(obj.type), x:obj.x, y:obj.y, vx: obj.vx || 0, vy: obj.vy || 0, speed: obj.speed || 0})   )   
+   // console.log("create ", JSON.stringify({type:1,wobject:getWObject(obj.type), x:obj.x, y:obj.y, vx: obj.vx || 0, vy: obj.vy || 0, speed: obj.speed || 0})   )   
     window.WLROOM.createObject({type:1,wobject:getWObject(obj.type), x:obj.x, y:obj.y, vx: obj.vx || 0, vy: obj.vy || 0, speed: obj.speed || 0})
 }
 
@@ -117,6 +141,10 @@ function getWObject(type) {
             return 56;
         case "platform":
             return 57;
+        case "water":
+            return 58;
+        default:
+            return type;
     }
 }
 function setExpand(expand) {
@@ -147,7 +175,7 @@ function randomIdx(arr) {
 function setModeBySettings(setting, mode) {
     resetModes();
     if (!mode || !setting[mode]) {
-        mode = randomItem(Object.keys(setting),["materials","palette","colorAnim","expandable", "expand", "objects"]); // random mode if there are multiples, filters out "non game mode" properties
+        mode = randomItem(Object.keys(setting),["materials","palette","colorAnim","expandable", "expand", "objects", "layers","objectsSteps"]); // random mode if there are multiples, filters out "non game mode" properties
     }    
     console.log("loading mode "+mode)
     window.WLROOM.setSettings(gameSettings.get(mode));
@@ -158,8 +186,13 @@ function setModeBySettings(setting, mode) {
             window.WLROOM.setZone(...s)
             break;
         case "pred":
-            console.log("pred", ...s)
-            window.WLROOM.setSpawn(0,...s)
+            if (typeof s.startGame == "function") {
+                currentMapSettings = s; 
+                s.startGame()
+            } else {
+                console.log("pred", ...s)                
+                window.WLROOM.setSpawn(0,...s)
+            }            
             break;
         case "dtf":
             loadDTFsettings(s);
