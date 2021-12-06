@@ -92,22 +92,26 @@ function loadMapByName(name, mode) {
         objectsSteps = sett.objectsSteps ? [...sett.objectsSteps]: false
         if (objectsSteps) {
             let timeout = objectsSteps.shift()
-            objectStepTimeoutId = setTimeout(objectStepShift, 1000*timeout)
+            console.log("timeout", timeout)
+            objectStepTimeoutId = setTimeout(objectStepShift(timeout), 1000*timeout)
         }
         window.WLROOM.restartGame()
     })();
 }
 
-function objectStepShift() {
-    console.log("advance object step")
-    if (objectsSteps && objectsSteps.length>0) {
-        let step = objectsSteps.shift()
-        createObjects(step)
-
-        if (objectsSteps.length>0) {
-            objectStepTimeoutId = setTimeout(objectStepShift, 1000*1)
+function objectStepShift(timeout) {
+    return () => {
+        console.log("advance object step")
+        if (objectsSteps && objectsSteps.length>0) {
+            let step = objectsSteps.shift()
+            createObjects(step)
+    
+            if (objectsSteps.length>0) {
+                objectStepTimeoutId = setTimeout(objectStepShift(timeout), 1000*timeout)
+            }
         }
     }
+   
 }
 // l(a) { // pack message
 //     a.g(1); // message version
