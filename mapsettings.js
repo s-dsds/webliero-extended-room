@@ -18,6 +18,109 @@ var mapSettings = new Map();
 //     }
 // })
 
+// mapSettings.set("https://sylvodsds.gitlab.io/webliero-builder-maps/maps/bg/bg%E2%9D%A4.png", {
+//     ctf: [
+//         // spawn flag left
+
+//         (new CTFSettings())
+//             .addFlagGreenSpawn(60, 15)
+//             .addGreenSpawn(60, 15)
+           
+//             .addFlagBlueSpawn(444, 15) 
+//             .addBlueSpawn(60, 15)
+            
+//         ],
+//     materials: defaultMaterials.map(noUndef),    
+//     objects: (() => {
+//         let obj = []
+//         obj.push({type:"platform", x:60, y:160, angle: 1.5, speed:2})
+//         obj.push({type:"platform", x:444, y:160, angle:1.5, speed:2})
+
+
+
+//         obj.push({type:"platform_small_wobbly", x:207, y:226})
+
+//         /*
+//         for (let x = 17; x<=510;x+=35) {
+//             obj.push({type:"water", x:x, y:330})
+//         }
+//         for (let x = 17; x<=510;x+=35) {
+//             obj.push({type:"water", x:x, y:300})
+//         }
+//         */
+//         return obj
+//      })(),
+//     // layers: {
+//     //     "front":"same"
+//     // }
+// })
+
+
+
+
+// mapSettings.set("https://sylvodsds.gitlab.io/webliero-builder-maps/maps/bg/bg%E2%9D%A4round.png", {
+//     ctf: [
+//         // spawn flag left
+
+//         (new CTFSettings())
+//             .addFlagGreenSpawn(102, 150)
+//             .addGreenSpawn(102, 150)
+           
+//             .addFlagBlueSpawn(102, 150) 
+//             .addBlueSpawn(102, 150)
+            
+//         ],
+//     materials: defaultMaterials.map(noUndef),    
+//     objects: (() => {
+//         let obj = []
+//         obj.push({type:"platform", x:102, y:400, angle: 1.5, speed:2})
+//         obj.push({type:"platform", x:102, y:400, angle:1.5, speed:2})
+
+
+//         obj.push({type:"platform_small_wobbly", x:207, y:226})
+//         obj.push({type:"platform_small_wobbly", x:320, y:226})
+//         obj.push({type:"platform_small_wobbly", x:480, y:226})        
+//         obj.push({type:"platform_small_wobbly", x:593, y:226})
+
+//         obj.push({type:"platform_small_wobbly", x:271, y:289})
+//         obj.push({type:"platform_small_wobbly", x:400, y:289})
+//         obj.push({type:"platform_small_wobbly", x:529, y:289})
+
+//         obj.push({type:"platform_small_wobbly", x:207, y:369})
+//         obj.push({type:"platform_small_wobbly", x:320, y:369})
+//         obj.push({type:"platform_small_wobbly", x:480, y:369})
+//         obj.push({type:"platform_small_wobbly", x:593, y:369})
+
+//         obj.push({type:"platform_small_wobbly", x:271, y:440})
+//         obj.push({type:"platform_small_wobbly", x:400, y:440})
+//         obj.push({type:"platform_small_wobbly", x:529, y:440})
+
+//         obj.push({type:"platform_small_wobbly", x:207, y:521})
+//         obj.push({type:"platform_small_wobbly", x:320, y:521})
+//         obj.push({type:"platform_small_wobbly", x:480, y:521})
+//         obj.push({type:"platform_small_wobbly", x:593, y:521})
+
+//         for (let x = 278; x<=525;x+=35) {
+//             obj.push({type:"water", x:x, y:778})
+//         }
+//         for (let x = 193; x<=600;x+=35) {
+//             obj.push({type:"water", x:x, y:743})
+//         }
+//         for (let x = 162; x<=619;x+=35) {
+//             obj.push({type:"water", x:x, y:728})
+//         }
+//         for (let x = 125; x<=671;x+=35) {
+//             obj.push({type:"water", x:x, y:693})
+//         }
+//         for (let x = 100; x<=700;x+=35) {
+//             obj.push({type:"water", x:x, y:658})
+//         }
+//         return obj
+//      })(),
+//     // layers: {
+//     //     "front":"same"
+//     // }
+// })
 
 mapSettings.set("wgetch/arena/micro-arena.png", {
     haz: [[411,331,488,363]],
@@ -809,13 +912,13 @@ mapSettings.set("wgetch/flag/forts-flag.png",
              .addGreenSpawn(732, 293)
              .addGreenSpawn(798, 376)
              .addGreenSpawn(941, 396)
-             .addFlagBlueSpawn(948, 252)             
-             .addFlagBlueSpawn(941, 295)             
-             .addFlagBlueSpawn(941, 334)             
-             .addFlagBlueSpawn(963, 407)             
-             .addFlagBlueSpawn(701, 218)             
-             .addFlagBlueSpawn(701, 255)             
-             .addFlagBlueSpawn(765, 330)           
+             .addFlagGreenSpawn(948, 252)             
+             .addFlagGreenSpawn(941, 295)             
+             .addFlagGreenSpawn(941, 334)             
+             .addFlagGreenSpawn(963, 407)             
+             .addFlagGreenSpawn(701, 218)             
+             .addFlagGreenSpawn(701, 255)             
+             .addFlagGreenSpawn(765, 330)           
 
          ],
     materials: defaultMaterials.map(noUndef)

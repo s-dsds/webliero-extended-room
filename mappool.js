@@ -136,15 +136,30 @@ function createObjects(objects) {
 
 function createObject(obj) {  
    // console.log("create ", JSON.stringify({type:1,wobject:getWObject(obj.type), x:obj.x, y:obj.y, vx: obj.vx || 0, vy: obj.vy || 0, speed: obj.speed || 0})   )   
-    window.WLROOM.createObject({type:1,wobject:getWObject(obj.type), x:obj.x, y:obj.y, vx: obj.vx || 0, vy: obj.vy || 0, speed: obj.speed || 0})
+    window.WLROOM.createObject({
+            type:    1, //1=wObject
+            wobject: getWObject(obj.type),
+            x:       obj.x || 0,
+            y:       obj.y || 0,
+            vx:      obj.vx || 0,
+            vy:      obj.vy || 0,
+            speed:   obj.speed || 0,
+            angle:   obj.angle || 0
+        })
 }
 
 function getWObject(type) {
     switch (type) { 
         case "lava":
             return 56;
-        case "platform":
+        case "platform_square":
             return 57;
+        case "platform":
+            return 59;            
+        case "platform_wobbly":
+            return 60;
+        case "platform_small_wobbly":
+            return 61;
         case "water":
             return 58;
         default:
