@@ -921,7 +921,6 @@ mapSettings.set("wgetch/flag/forts-flag.png",
              .addFlagGreenSpawn(765, 330)           
 
          ],
-    materials: defaultMaterials.map(noUndef)
     }
 )
 
