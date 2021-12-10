@@ -81,6 +81,35 @@ class WLX_Directional_Fire {
 
 }
 
+class WLX_Laser {		
+	
+	//wobject,x,y,speed,dist,freq,team
+	static create(o){
+		let t = new WLX_Laser();
+		for(let k in o) t[k]=o[k];		
+		t.dist = (t.dist||500)*100;
+		t.freq = t.freq||0;
+		t.team = t.team||0;
+		t.x = t.x||0;
+		t.y = t.y||0;
+		t.speed = t.speed||3;
+		if(!WLX_Laser.list) WLX_Laser.list=[];
+		WLX_Laser.list.push(t);
+	}
+	
+	static clear(){
+		WLX_Laser.list=null;
+	}
+	
+	static update(){
+		if(!WLX_Laser.list) return;
+        WLX_Laser.list.forEach(t=>{								                
+                window.WLROOM.createObject({wobject:t.wobject,speed:t.speed,angle:t.angle,x:t.x,y:t.y});
+			});		
+	}
+
+}
+
 class WLX_Teleport {		
 		
 	static create(o){
@@ -119,7 +148,8 @@ class WLX {
 	static update(){
 		WLX_Turret.update();
 		WLX_Teleport.update();
-        WLX_Directional_Fire.update();        
+        WLX_Directional_Fire.update();    
+        WLX_Laser.update();    
 	}	
 	static createTurret(o){
 		WLX_Turret.create(o);
@@ -137,13 +167,17 @@ class WLX {
                 break; 
             case "directionnal":
                 WLX_Directional_Fire.create(o);
-                break; 
+                break;
+            case "laser":
+                WLX_Laser.create(o);
+                break;
         }
     }
     static clear() {
         WLX_Turret.clear();
         WLX_Teleport.clear();
         WLX_Directional_Fire.clear();
+        WLX_Laser.clear();
     }
 }
 

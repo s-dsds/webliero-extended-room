@@ -18,25 +18,53 @@ var mapSettings = new Map();
 //     }
 // })
 
-mapSettings.set("https://sylvodsds.gitlab.io/webliero-builder-maps/maps/bg/bg%E2%9D%A4.png", {
+mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/evil_flag_map.png", {
     modes: { ctf: [
         // spawn flag left
 
         (new CTFSettings())
-            .addFlagGreenSpawn(60, 15)
+            .addFlagGreenSpawn(98, 30)
             .addGreenSpawn(60, 15)
            
-            .addFlagBlueSpawn(444, 15) 
+            .addFlagBlueSpawn(408, 30) 
             .addBlueSpawn(60, 15)
             
         ],},
     materials: defaultMaterials.map(noUndef),    
     objects: (() => {
+        const up = WLPI/2*3
+        const down = WLPI/2
+        const right = 0
+        const left = WLPI
+        
         let obj = []
-        obj.push({type:"platform", id: 80, x:60, y:160, angle: WLPI/2*3, speed: 0.2})
-        obj.push({type:"platform", id: 81, x:444, y:160, angle:WLPI/2, speed:0.2})
+        obj.push({type:"platform", id: 80, x:44, y:160, angle: up, speed: 0.2})
+        obj.push({type:"platform", id: 81, x:462, y:160, angle: down, speed:0.2})
 
+        let wobbly = {
+            82:{x:190, y:100},
+            83:{x:310, y:100},
+            84:{x:190, y:200},
+            85:{x:310, y:200},
+        }
+        for (let id in wobbly) {
+            obj.push({type:"platform_small_wobbly", id: id, x:wobbly[id].x, y:wobbly[id].y})
+        }
+        
+        for (let x = 10; x<=500;x+=35) {
+            obj.push({type:"lava", x:x, y:330})
+        }
 
+        obj.push({ wlx:"laser", wobject:62,x:1,y:2,freq:0,dist:1,speed:1, angle: 0}) // laser cutter,
+        obj.push({ wlx:"laser", wobject:62,x:503,y:4,freq:0,dist:1,speed:2, angle: WLPI}) // laser cutter,
+        obj.push({ wlx:"laser", wobject:62,x:2,y:2,freq:0,dist:1,speed:3, angle: down}) // laser cutter,
+        obj.push({ wlx:"laser", wobject:62,x:501,y:2,freq:0,dist:1,speed:3, angle: down}) // laser cutter,
+
+        obj.push({ wlx:"laser", wobject:63,x:93,y:123,freq:0,dist:1,speed:1, angle: up}) // green,
+        obj.push({ wlx:"laser", wobject:63,x:115,y:41,freq:0,dist:1,speed:1, angle: up}) // green,
+
+        obj.push({ wlx:"laser", wobject:64,x:409,y:123,freq:0,dist:1,speed:1, angle: up}) // blue,        
+        obj.push({ wlx:"laser", wobject:64,x:387,y:41,freq:0,dist:1,speed:1, angle: up}) // blue,        
 
        // obj.push({type:"platform_small_wobbly", x:207, y:226})
         return obj
@@ -51,7 +79,16 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-builder-maps/maps/bg/bg%E2
                     const right = 0
                     const left = WLPI
 
-                    const leftD = [right, down, left, up]
+                    const leftD = [down, up]
+                    const rightD = [up, down]
+
+                    // let wobbly = {
+                    //     82:{x:190, y:100, ref:null},
+                    //     83:{x:310, y:100, ref:null},
+                    //     84:{x:190, y:200, ref:null},
+                    //     85:{x:310, y:200, ref:null},
+                    // }
+
                     return (g) => {     
                         if (!leftPlat) {
                             leftPlat = window.WLROOM.getObject(80)
@@ -59,27 +96,98 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-builder-maps/maps/bg/bg%E2
                         if (!rightPlat) {
                             rightPlat = window.WLROOM.getObject(81)
                         }                                                           
-                        if ([(leftPlat.y<=60),(leftPlat.x>=444),(leftPlat.y>=280),(leftPlat.x<=60)][leftI]) {                                                        
+                        if ([(leftPlat.y<=60),(leftPlat.y>=280)][leftI]) {                                                        
                             window.WLROOM.changeObjectDirection(80, leftD[leftI], 0.2)
-                            leftI = leftI==3?0:leftI+1
+                            leftI = leftI==1?0:leftI+1
                         }
                                                 
                         if ([(rightPlat.y>=280),(rightPlat.y<=60)][rightI]) {
-                            window.WLROOM.changeObjectDirection(81, rightI?down:up, 0.2)
-                            rightI = rightI==0?1:0
+                            window.WLROOM.changeObjectDirection(81, rightD[rightI], 0.2)
+                            rightI = rightI==1?0:leftI+1
                         }
+                        // for (let id in wobbly) {
+                        //         if (!wobbly[id].ref) {
+                        //             wobbly[id].ref = window.WLROOM.getObject(id)
+                        //         }
+
+                        //         if (Math.abs(wobbly[id].x-wobbly[id].ref.x)>50 || Math.abs(wobbly[id].y-wobbly[id].ref.y)>50) {
+                        //             console.log("reposition", id,wobbly[id].x,wobbly[id].y,wobbly[id].ref.x,wobbly[id].ref.y, Math.abs(wobbly[id].x-wobbly[id].ref.x),Math.abs(wobbly[id].y-wobbly[id].ref.y) )                                   
+                        //             window.WLROOM.moveObject(id, wobbly[id].x, wobbly[id].y)
+                        //         }
+                        // }
                 }
             })     
     // layers: {
     //     "front":"same"
     // }
 })
+// mapSettings.set("https://sylvodsds.gitlab.io/webliero-builder-maps/maps/bg/bg%E2%9D%A4.png", {
+//     modes: { ctf: [
+//         // spawn flag left
+
+//         (new CTFSettings())
+//             .addFlagGreenSpawn(60, 15)
+//             .addGreenSpawn(60, 15)
+           
+//             .addFlagBlueSpawn(444, 15) 
+//             .addBlueSpawn(60, 15)
+            
+//         ],},
+//     materials: defaultMaterials.map(noUndef),    
+//     objects: (() => {
+//         let obj = []
+//         obj.push({type:"platform", id: 80, x:60, y:160, angle: WLPI/2*3, speed: 0.2})
+//         obj.push({type:"platform", id: 81, x:444, y:160, angle:WLPI/2, speed:0.2})
+        
+//         obj.push({ wlx:"laser", wobject:62,x:1,y:2,freq:0,dist:1,speed:1, angle: 0}) // laser cutter,
+//         obj.push({ wlx:"laser",  wobject:62,x:503,y:4,freq:0,dist:1,speed:2, angle: WLPI}) // laser cutter,
+//         obj.push({ wlx:"laser", wobject:62,x:1,y:6,freq:0,dist:1,speed:6, angle: 0}) // laser cutter,
+//         obj.push({ wlx:"laser", wobject:62,x:503,y:340,freq:0,dist:1,speed:4, angle: WLPI}) // laser cutter,
+//         obj.push({ wlx:"laser", wobject:62,x:1,y:345,freq:0,dist:1,speed:5, angle: 0}) // laser cutter,
+//         obj.push({ wlx:"laser", wobject:62,x:503,y:347,freq:0,dist:1,speed:6, angle: WLPI}) // laser cutter,        
+
+//        // obj.push({type:"platform_small_wobbly", x:207, y:226})
+//         return obj
+//      }),
+//      onGameTick: (() => {
+//                     let leftPlat = null
+//                     let rightPlat = null
+//                     let leftI = 0
+//                     let rightI = 0
+//                     const up = WLPI/2*3
+//                     const down = WLPI/2
+//                     const right = 0
+//                     const left = WLPI
+
+//                     const leftD = [right, down, left, up]
+//                     return (g) => {     
+//                         if (!leftPlat) {
+//                             leftPlat = window.WLROOM.getObject(80)
+//                         }   
+//                         if (!rightPlat) {
+//                             rightPlat = window.WLROOM.getObject(81)
+//                         }                                                           
+//                         if ([(leftPlat.y<=60),(leftPlat.x>=444),(leftPlat.y>=280),(leftPlat.x<=60)][leftI]) {                                                        
+//                             window.WLROOM.changeObjectDirection(80, leftD[leftI], 0.2)
+//                             leftI = leftI==3?0:leftI+1
+//                         }
+                                                
+//                         if ([(rightPlat.y>=280),(rightPlat.y<=60)][rightI]) {
+//                             window.WLROOM.changeObjectDirection(81, rightI?down:up, 0.2)
+//                             rightI = rightI==0?1:0
+//                         }
+//                 }
+//             })     
+//     // layers: {
+//     //     "front":"same"
+//     // }
+// })
 
 
 mapSettings.set("dsds/space_one.png", {
     modes: {pred: [[706,56]],},
     objects: [
-        { wlx:"turret", wobject:38,x:706,y:56,freq:2,dist:1000,speed:1}, // laser cutter,
+        { wlx:"turret", wobject:38,x:706,y:56,freq:2,dist:1000,speed:1}, // laser pistol,
         { wlx:"turret", wobject:3,x:628,y:202,freq:8,dist:1000,speed:4}, // solar flare,
         { wlx:"turret", wobject:3,x:786,y:202,freq:8,dist:1000,speed:4}, // solar flare,
         { wlx:"turret", wobject:9,x:562,y:500,freq:3,dist:1000,speed:3}, // RAILGUN,
@@ -87,8 +195,8 @@ mapSettings.set("dsds/space_one.png", {
         { wlx:"directionnal", wobject:9,x:364,y:600,freq:4,angle: WLPI*1.74,dist:1000,speed:2}, // RAILGUN,
         { wlx:"directionnal", wobject:9,x:385,y:602,freq:6,angle: WLPI*1.8,dist:1000,speed:3}, // RAILGUN,
         { wlx:"directionnal", wobject:8,x:1169,y:589,freq:8,angle: WLPI*1.25,dist:1000,speed:1}, // Panzer,
-        { wlx:"directionnal", wobject:38,x:1155,y:762,freq:2,angle: WLPI*1.33,dist:1000,speed:1}, // laser cutter,
-        { wlx:"directionnal", wobject:38,x:1334,y:662,freq:3,angle: WLPI*1.22,dist:1000,speed:1.2}, // laser cutter,
+        { wlx:"directionnal", wobject:38,x:1155,y:762,freq:2,angle: WLPI*1.33,dist:1000,speed:1}, // laser pistol,
+        { wlx:"directionnal", wobject:38,x:1334,y:662,freq:3,angle: WLPI*1.22,dist:1000,speed:1.2}, // laser pistol,
     ],
     materials: defaultMaterials.map(noUndef),
     palette: new Uint8Array([21,19,19,108,56,0,108,80,0,164,148,128,0,144,0,61,173,61,252,84,84,168,168,168,85,85,85,84,84,252,84,216,84,84,252,252,120,64,8,128,68,8,136,72,12,144,80,16,152,84,20,160,88,24,172,96,28,35,30,45,84,84,84,92,92,92,100,100,100,109,109,109,116,116,116,125,125,125,132,132,132,140,140,140,148,148,148,157,157,157,56,56,136,81,81,193,105,105,249,145,145,245,185,185,245,110,110,110,145,145,145,181,181,181,217,217,217,32,96,32,45,133,45,62,174,62,113,189,113,165,213,165,111,111,111,146,146,146,182,182,182,218,218,218,168,168,248,208,208,244,252,252,244,60,80,0,88,112,0,116,144,0,148,176,0,120,72,52,157,121,89,197,169,125,237,217,161,156,120,88,196,168,124,236,216,160,200,100,0,160,80,0,72,72,72,108,108,108,147,147,147,180,180,180,216,216,216,253,253,253,196,196,196,144,144,144,152,60,0,180,100,0,208,140,0,236,180,0,168,84,0,217,1,1,189,1,1,165,1,1,200,0,0,172,0,0,218,2,2,190,2,2,166,2,2,216,0,0,188,0,0,164,0,0,82,82,194,106,106,250,146,146,246,80,80,192,107,107,251,147,147,247,149,137,1,136,124,0,124,112,0,116,100,0,132,92,40,160,132,72,188,176,104,216,220,136,248,248,188,244,244,252,253,1,1,248,24,4,248,52,8,248,80,16,248,108,20,248,136,24,248,164,32,248,192,36,248,220,40,245,233,61,244,244,80,244,244,112,244,244,148,240,240,180,240,240,212,240,240,248,46,134,46,63,175,63,114,190,114,47,135,47,64,176,64,115,191,115,248,60,60,244,124,124,244,188,188,104,104,248,148,148,248,184,184,244,144,144,244,65,177,65,116,192,116,164,212,164,112,188,112,148,136,0,136,116,0,124,96,0,112,76,0,6,2,18,15,2,23,104,104,136,144,144,192,188,188,248,200,200,244,220,220,244,40,112,40,44,132,44,52,152,52,60,172,60,252,200,200,245,165,165,248,92,92,245,77,77,244,60,60,244,76,76,244,92,92,244,164,164,84,40,0,19,34,96,18,27,85,28,40,88,7,0,13,39,6,80,18,6,32,0,0,0,252,252,252,221,221,221,189,189,189,158,158,158,124,124,124,156,156,156,188,188,188,220,220,220,108,76,44,124,84,48,140,96,56,156,108,64,172,120,72,0,0,0,40,36,8,80,76,20,120,116,28,160,152,40,200,192,48,244,232,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,254,2,2,252,36,0,252,72,0,252,108,0,252,144,0,252,180,0,252,216,0,252,252,0,168,240,0,84,232,0,0,224,0,252,0,0,232,4,20,216,12,44,196,20,68,180,24,88,160,32,112,144,40,136,124,44,156,108,52,180,88,60,204,72,68,228])
