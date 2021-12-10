@@ -103,7 +103,7 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/evil_flag_map.pn
                                                 
                         if ([(rightPlat.y>=280),(rightPlat.y<=60)][rightI]) {
                             window.WLROOM.changeObjectDirection(81, rightD[rightI], 0.2)
-                            rightI = rightI==1?0:leftI+1
+                            rightI = rightI==1?0:rightI+1
                         }
                         // for (let id in wobbly) {
                         //         if (!wobbly[id].ref) {
