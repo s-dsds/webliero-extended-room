@@ -6,8 +6,11 @@ var currentMapName = "";
 var currentMapSettings = null;
 
 var loadMe = null;
+var mapTickHandler = null;
 var objectsSteps = []
 var objectStepTimeoutId
+const WLPI = 3.141592653589793;
+
 
 function getMapUrl(name) {
     if (name.substring(0,8)=='https://') {
@@ -86,7 +89,19 @@ function loadMapByName(name, mode) {
         }
         
         if (sett.objects) { // initial objects
-            loadMe = sett.objects
+            if (typeof sett.objects=="function") {
+                loadMe = sett.objects()
+            } else {
+                loadMe = sett.objects
+            }
+
+        }
+        if (sett.onGameTick) {
+            if (typeof sett.onGameTick=="function") {
+                mapTickHandler = sett.onGameTick()
+            } else {
+                mapTickHandler = sett.onGameTick
+            }
         }
 
         objectsSteps = sett.objectsSteps ? [...sett.objectsSteps]: false
@@ -135,17 +150,14 @@ function createObjects(objects) {
 }
 
 function createObject(obj) {  
-   // console.log("create ", JSON.stringify({type:1,wobject:getWObject(obj.type), x:obj.x, y:obj.y, vx: obj.vx || 0, vy: obj.vy || 0, speed: obj.speed || 0})   )   
-    window.WLROOM.createObject({
-            type:    1, //1=wObject
-            wobject: getWObject(obj.type),
-            x:       obj.x || 0,
-            y:       obj.y || 0,
-            vx:      obj.vx || 0,
-            vy:      obj.vy || 0,
-            speed:   obj.speed || 0,
-            angle:   obj.angle || 0
-        })
+   // console.log("create ", JSON.stringify({type:1,wobject:getWObject(obj.type), x:obj.x, y:obj.y, vx: obj.vx || 0, vy: obj.vy || 0, speed: obj.speed || 0})   ) 
+    if (obj.wlx) {
+         WLX.create(obj)
+    } else {
+        obj.wobject =  getWObject(obj.type)
+        obj.type = 1
+        window.WLROOM.createObject(obj)
+    }    
 }
 
 function getWObject(type) {
@@ -193,13 +205,13 @@ function randomIdx(arr) {
 
 function setModeBySettings(setting, mode) {
     resetModes();
-    if (!mode || !setting[mode]) {
-        mode = randomItem(Object.keys(setting),["materials","palette","colorAnim","expandable", "expand", "objects", "layers","objectsSteps"]); // random mode if there are multiples, filters out "non game mode" properties
+    if (!mode || (setting.modes && !setting.modes[mode])) {
+        mode = randomItem(Object.keys(setting.modes ?? {})); // random mode if there are multiples
     }    
     console.log("loading mode "+mode)
     window.WLROOM.setSettings(gameSettings.get(mode));
 
-    const s = randomItem(setting[mode]); // random setting if there are multiples
+    const s = randomItem(setting.modes[mode]); // random setting if there are multiples
     switch (mode) {
         case "haz":
             window.WLROOM.setZone(...s)
@@ -224,8 +236,10 @@ function setModeBySettings(setting, mode) {
     }
 }
 function resetModes() {
+    WLX.clear()
     window.WLROOM.setZone(-1);
     window.WLROOM.setSpawn(-1);
+    mapTickHandler = null;
     if (currentMapSettings && typeof currentMapSettings.endGame == "function") {
         currentMapSettings.endGame()
     }

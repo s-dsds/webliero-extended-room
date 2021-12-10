@@ -18,44 +18,81 @@ var mapSettings = new Map();
 //     }
 // })
 
-// mapSettings.set("https://sylvodsds.gitlab.io/webliero-builder-maps/maps/bg/bg%E2%9D%A4.png", {
-//     ctf: [
-//         // spawn flag left
+mapSettings.set("https://sylvodsds.gitlab.io/webliero-builder-maps/maps/bg/bg%E2%9D%A4.png", {
+    modes: { ctf: [
+        // spawn flag left
 
-//         (new CTFSettings())
-//             .addFlagGreenSpawn(60, 15)
-//             .addGreenSpawn(60, 15)
+        (new CTFSettings())
+            .addFlagGreenSpawn(60, 15)
+            .addGreenSpawn(60, 15)
            
-//             .addFlagBlueSpawn(444, 15) 
-//             .addBlueSpawn(60, 15)
+            .addFlagBlueSpawn(444, 15) 
+            .addBlueSpawn(60, 15)
             
-//         ],
-//     materials: defaultMaterials.map(noUndef),    
-//     objects: (() => {
-//         let obj = []
-//         obj.push({type:"platform", x:60, y:160, angle: 1.5, speed:2})
-//         obj.push({type:"platform", x:444, y:160, angle:1.5, speed:2})
+        ],},
+    materials: defaultMaterials.map(noUndef),    
+    objects: (() => {
+        let obj = []
+        obj.push({type:"platform", id: 80, x:60, y:160, angle: WLPI/2*3, speed: 0.2})
+        obj.push({type:"platform", id: 81, x:444, y:160, angle:WLPI/2, speed:0.2})
 
 
 
-//         obj.push({type:"platform_small_wobbly", x:207, y:226})
+       // obj.push({type:"platform_small_wobbly", x:207, y:226})
+        return obj
+     }),
+     onGameTick: (() => {
+                    let leftPlat = null
+                    let rightPlat = null
+                    let leftI = 0
+                    let rightI = 0
+                    const up = WLPI/2*3
+                    const down = WLPI/2
+                    const right = 0
+                    const left = WLPI
 
-//         /*
-//         for (let x = 17; x<=510;x+=35) {
-//             obj.push({type:"water", x:x, y:330})
-//         }
-//         for (let x = 17; x<=510;x+=35) {
-//             obj.push({type:"water", x:x, y:300})
-//         }
-//         */
-//         return obj
-//      })(),
-//     // layers: {
-//     //     "front":"same"
-//     // }
-// })
+                    const leftD = [right, down, left, up]
+                    return (g) => {     
+                        if (!leftPlat) {
+                            leftPlat = window.WLROOM.getObject(80)
+                        }   
+                        if (!rightPlat) {
+                            rightPlat = window.WLROOM.getObject(81)
+                        }                                                           
+                        if ([(leftPlat.y<=60),(leftPlat.x>=444),(leftPlat.y>=280),(leftPlat.x<=60)][leftI]) {                                                        
+                            window.WLROOM.changeObjectDirection(80, leftD[leftI], 0.2)
+                            leftI = leftI==3?0:leftI+1
+                        }
+                                                
+                        if ([(rightPlat.y>=280),(rightPlat.y<=60)][rightI]) {
+                            window.WLROOM.changeObjectDirection(81, rightI?down:up, 0.2)
+                            rightI = rightI==0?1:0
+                        }
+                }
+            })     
+    // layers: {
+    //     "front":"same"
+    // }
+})
 
 
+mapSettings.set("dsds/space_one.png", {
+    modes: {pred: [[706,56]],},
+    objects: [
+        { wlx:"turret", wobject:38,x:706,y:56,freq:2,dist:1000,speed:1}, // laser cutter,
+        { wlx:"turret", wobject:3,x:628,y:202,freq:8,dist:1000,speed:4}, // solar flare,
+        { wlx:"turret", wobject:3,x:786,y:202,freq:8,dist:1000,speed:4}, // solar flare,
+        { wlx:"turret", wobject:9,x:562,y:500,freq:3,dist:1000,speed:3}, // RAILGUN,
+        { wlx:"turret", wobject:9,x:850,y:500,freq:3,dist:1000,speed:3}, // RAILGUN,
+        { wlx:"directionnal", wobject:9,x:364,y:600,freq:4,angle: WLPI*1.74,dist:1000,speed:2}, // RAILGUN,
+        { wlx:"directionnal", wobject:9,x:385,y:602,freq:6,angle: WLPI*1.8,dist:1000,speed:3}, // RAILGUN,
+        { wlx:"directionnal", wobject:8,x:1169,y:589,freq:8,angle: WLPI*1.25,dist:1000,speed:1}, // Panzer,
+        { wlx:"directionnal", wobject:38,x:1155,y:762,freq:2,angle: WLPI*1.33,dist:1000,speed:1}, // laser cutter,
+        { wlx:"directionnal", wobject:38,x:1334,y:662,freq:3,angle: WLPI*1.22,dist:1000,speed:1.2}, // laser cutter,
+    ],
+    materials: defaultMaterials.map(noUndef),
+    palette: new Uint8Array([21,19,19,108,56,0,108,80,0,164,148,128,0,144,0,61,173,61,252,84,84,168,168,168,85,85,85,84,84,252,84,216,84,84,252,252,120,64,8,128,68,8,136,72,12,144,80,16,152,84,20,160,88,24,172,96,28,35,30,45,84,84,84,92,92,92,100,100,100,109,109,109,116,116,116,125,125,125,132,132,132,140,140,140,148,148,148,157,157,157,56,56,136,81,81,193,105,105,249,145,145,245,185,185,245,110,110,110,145,145,145,181,181,181,217,217,217,32,96,32,45,133,45,62,174,62,113,189,113,165,213,165,111,111,111,146,146,146,182,182,182,218,218,218,168,168,248,208,208,244,252,252,244,60,80,0,88,112,0,116,144,0,148,176,0,120,72,52,157,121,89,197,169,125,237,217,161,156,120,88,196,168,124,236,216,160,200,100,0,160,80,0,72,72,72,108,108,108,147,147,147,180,180,180,216,216,216,253,253,253,196,196,196,144,144,144,152,60,0,180,100,0,208,140,0,236,180,0,168,84,0,217,1,1,189,1,1,165,1,1,200,0,0,172,0,0,218,2,2,190,2,2,166,2,2,216,0,0,188,0,0,164,0,0,82,82,194,106,106,250,146,146,246,80,80,192,107,107,251,147,147,247,149,137,1,136,124,0,124,112,0,116,100,0,132,92,40,160,132,72,188,176,104,216,220,136,248,248,188,244,244,252,253,1,1,248,24,4,248,52,8,248,80,16,248,108,20,248,136,24,248,164,32,248,192,36,248,220,40,245,233,61,244,244,80,244,244,112,244,244,148,240,240,180,240,240,212,240,240,248,46,134,46,63,175,63,114,190,114,47,135,47,64,176,64,115,191,115,248,60,60,244,124,124,244,188,188,104,104,248,148,148,248,184,184,244,144,144,244,65,177,65,116,192,116,164,212,164,112,188,112,148,136,0,136,116,0,124,96,0,112,76,0,6,2,18,15,2,23,104,104,136,144,144,192,188,188,248,200,200,244,220,220,244,40,112,40,44,132,44,52,152,52,60,172,60,252,200,200,245,165,165,248,92,92,245,77,77,244,60,60,244,76,76,244,92,92,244,164,164,84,40,0,19,34,96,18,27,85,28,40,88,7,0,13,39,6,80,18,6,32,0,0,0,252,252,252,221,221,221,189,189,189,158,158,158,124,124,124,156,156,156,188,188,188,220,220,220,108,76,44,124,84,48,140,96,56,156,108,64,172,120,72,0,0,0,40,36,8,80,76,20,120,116,28,160,152,40,200,192,48,244,232,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,254,2,2,252,36,0,252,72,0,252,108,0,252,144,0,252,180,0,252,216,0,252,252,0,168,240,0,84,232,0,0,224,0,252,0,0,232,4,20,216,12,44,196,20,68,180,24,88,160,32,112,144,40,136,124,44,156,108,52,180,88,60,204,72,68,228])
+})
 
 
 // mapSettings.set("https://sylvodsds.gitlab.io/webliero-builder-maps/maps/bg/bg%E2%9D%A4round.png", {
@@ -123,24 +160,24 @@ var mapSettings = new Map();
 // })
 
 mapSettings.set("wgetch/arena/micro-arena.png", {
-    haz: [[411,331,488,363]],
+    modes: { haz: [[411,331,488,363]],}
 })
 
 mapSettings.set("wgetch/arena/eye-arena.png", {
-    haz: [[395,206,505,316]],
+    modes: { haz: [[395,206,505,316]],},
 })
 
 mapSettings.set("wgetch/arena/chipper-arena.png", {
-    haz: [[392,233,484,345]],
+    modes: {  haz: [[392,233,484,345]],},
 })
 mapSettings.set("wgetch/zone/igloo-zone.png", {
-    haz: [[512,293,598,329]],
+    modes: { haz: [[512,293,598,329]],},
 })
 mapSettings.set("wgetch/zone/inter-zone.png", {
-    haz: [[497,255,553,288]],
+    modes: { haz: [[497,255,553,288]],},
 })
 mapSettings.set("wgetch/zone/light-zone.png", {
-    haz: [[269,209,348,255]],
+    modes: {  haz: [[269,209,348,255]], },
     objects: [
         {type:"lava", x:229, y:334},
         {type:"lava", x:242, y:334},
@@ -161,7 +198,7 @@ mapSettings.set("wgetch/zone/light-zone.png", {
     materials: defaultMaterials.map(noUndef)
 })
 mapSettings.set("pilaf/hole.png", {
-    pred: [[341,256]],
+    modes: {pred: [[341,256]],},
     objects: [
         {type:"lava", x:174, y:616},
         {type:"lava", x:186, y:622},
@@ -193,24 +230,24 @@ mapSettings.set("pilaf/hole.png", {
     materials: defaultMaterials.map(replaceMatIndexBy(MATERIAL.ROCK,0, 155, 141,142,182,183))
 })
 mapSettings.set("piebaron/PieBaron_BR_pokolTribut_v0.lev", {
-    pred: [[504,109]],
+    modes: {pred: [[504,109]],},
     expand:true
 })
 mapSettings.set("pilaf/g3a.png", {
-    pred: [[200,200]],
+    modes: {pred: [[200,200]],},
 })
 mapSettings.set("dsds/squigglyswiggly/squig_fourth.png", {
-    pred: [[238,58]],
+    modes: {pred: [[238,58]],},
     materials: defaultMaterials.map(noUndef)
 })
 mapSettings.set("pilaf/axiom.lev", {
-    pred: [[504,119]],
+    modes: {pred: [[504,119]],},
     expand:true
 })
 
 mapSettings.set("piebaron/fArtefact_00.png", 
     {
-        pred:[
+        modes: { pred:[
             (new PredSettings())
             .addLemonSpawn(256,187)
             .addWormSpawn(318, 1870)
@@ -246,7 +283,7 @@ mapSettings.set("piebaron/fArtefact_00.png",
             .addWormSpawn(458, 73)
             .addWormSpawn(313, 10)
             .setOrder(PredSettings.ORDER.LOOP_LAST_FOUR)
-        ],
+        ],},
         objects: (() => {
             let obj = []
             
@@ -273,7 +310,7 @@ mapSettings.set("piebaron/fArtefact_00.png",
 
 mapSettings.set("wgetch/arena/snek-arena.png", 
     {
-        dtf: [
+        modes: { dtf: [
             [
                 [0,677,309],
                 [1,659,238],
@@ -284,7 +321,7 @@ mapSettings.set("wgetch/arena/snek-arena.png",
                 [1,242,92],
                 [2,645, 317],
               ]
-        ]    
+        ]    },
     }
 )
 // mapSettings.set("wgetch/arena/snek-arena.png#ctf", 
@@ -303,7 +340,7 @@ mapSettings.set("wgetch/arena/snek-arena.png",
 // )
 mapSettings.set("wgetch/flag/bunker-flag.png", 
     {
-        dtf: [
+        modes: { dtf: [
             // spawn flag left
             (new DTFSettings())
             .addFlagSpawn(784, 236)
@@ -329,10 +366,11 @@ mapSettings.set("wgetch/flag/bunker-flag.png",
                 .addBlueSpawn(915, 360)
                 .addFlagBlueSpawn(1213, 297)
             ]
+        },
 })
 mapSettings.set("wgetch/arena/gallery-arena.png", 
     {
-        ctf: [
+        modes: { ctf: [
             // spawn flag left
             (new CTFSettings())
                 .addFlagGreenSpawn(228, 49)
@@ -356,13 +394,13 @@ mapSettings.set("wgetch/arena/gallery-arena.png",
 
 
                 .setOrder(true)
-            ],
+            ],},
         materials: defaultMaterials.map(noUndef)
 })
 
 mapSettings.set("wgetch/flag/passage-flag.png", 
     {
-        dtf: [
+        modes: { dtf: [
             // spawn flag left
             (new DTFSettings())
             .addFlagSpawn(236, 144)
@@ -378,25 +416,25 @@ mapSettings.set("wgetch/flag/passage-flag.png",
             .addAttackSpawn(608, 175)
 
 
-        ]
+        ] },
 })
 
 
 mapSettings.set("wgetch/flag/ambi-flag.png", 
     {
-        ctf: [            
+        modes: {  ctf: [            
             (new CTFSettings())
             .addFlagGreenSpawn(267, 155) 
             .addGreenSpawn(232, 175)                          
 
             .addFlagBlueSpawn(481, 297)
             .addBlueSpawn(515, 281)
-        ]
+        ]},
 })
 
 mapSettings.set("wgetch/flag/ambi150-flag.png", 
     {
-        ctf: [            
+        modes: { ctf: [            
             (new CTFSettings())
             .addFlagGreenSpawn(293, 170) 
             .addGreenSpawn(257, 190)
@@ -408,12 +446,12 @@ mapSettings.set("wgetch/flag/ambi150-flag.png",
             .addFlagBlueSpawn(261, 421)
             .addBlueSpawn(279, 396)
             .setOrder(true)
-        ]
+        ]},
 })
 
 mapSettings.set("wgetch/flag/proton-flag.png", 
     {
-        dtf: [
+        modes: { dtf: [
             // spawn flag left
             (new DTFSettings())
                 .addFlagSpawn(269, 312)   
@@ -468,12 +506,12 @@ mapSettings.set("wgetch/flag/proton-flag.png",
                 .addBlueSpawn(928,234)
                 .addBlueSpawn(991,421)
                 .addBlueSpawn(1072,421)
-        ],
+        ],},
         
     }
 )
 mapSettings.set("dsds/fortified_castles.png",{
-    ctf: [
+    modes: {ctf: [
         // spawn flag left
         (new CTFSettings())
             .addFlagGreenSpawn(121, 194)   
@@ -488,10 +526,10 @@ mapSettings.set("dsds/fortified_castles.png",{
             .addBlueSpawn(800, 222)
             .addFlagBlueSpawn(1146, 202)
             //.addAttackSpawn(1120, 410),
-        ]
+        ]},
 })
 mapSettings.set("dsds/space_station.png",{
-    ctf: [
+    modes: { ctf: [
         // spawn flag left
         (new CTFSettings())
             .addFlagGreenSpawn(337, 224)   
@@ -506,12 +544,12 @@ mapSettings.set("dsds/space_station.png",{
             .addBlueSpawn(897, 924)
             .addFlagBlueSpawn(1183, 981)
             //.addAttackSpawn(1120, 410),
-        ],
+        ],},
     palette: true,
     materials: defaultMaterials.map(noUndef)
 })
 mapSettings.set("dsds/weblieroZ/kameshouseint.png",{
-    ctf: [
+    modes: { ctf: [
         // spawn flag left
         (new CTFSettings())
             .addFlagGreenSpawn(684, 262)   
@@ -530,13 +568,13 @@ mapSettings.set("dsds/weblieroZ/kameshouseint.png",{
             .addFlagBlueSpawn(723,704)            
             .addFlagBlueSpawn(660, 640)     
             .addFlagBlueSpawn(692, 695)  
-        ],
+        ],},
     palette: true,
     materials: defaultMaterials.map(noUndef).map(replaceMatIndexBy(MATERIAL.BG,1,2)),
     colorAnim: false
 })
 mapSettings.set("wgetch/labs/jambon.png",{
-    ctf: [
+    modes: {ctf: [
         // spawn flag left
         (new CTFSettings())
             .addFlagGreenSpawn(90, 500)   
@@ -551,12 +589,12 @@ mapSettings.set("wgetch/labs/jambon.png",{
             .addBlueSpawn(858, 388)
             .addFlagBlueSpawn(810, 500)
             //.addAttackSpawn(1120, 410),
-        ],
+        ],},
     materials: defaultMaterials.map(noUndef),
     palette: new Uint8Array([0,0,0,108,56,0,108,80,0,164,148,128,0,144,0,247,128,0,252,84,84,168,168,168,85,85,85,84,84,252,255,161,4,255,235,88,120,64,8,128,68,8,136,72,12,144,80,16,152,84,20,160,88,24,172,96,28,76,76,76,84,84,84,92,92,92,100,100,100,109,109,109,116,116,116,125,125,125,132,132,132,220,125,153,148,148,148,157,157,157,56,56,136,81,81,193,105,105,249,145,145,245,185,185,245,110,110,110,145,145,145,181,181,181,217,217,217,32,96,32,45,133,45,62,174,62,255,150,76,255,178,142,111,111,111,146,146,146,182,182,182,218,218,218,168,168,248,208,208,244,255,226,219,60,80,0,88,112,0,116,144,0,148,176,0,120,72,52,157,121,89,197,169,125,237,217,161,235,92,167,255,132,199,255,174,212,200,100,0,160,80,0,72,72,72,108,108,108,147,147,147,180,180,180,216,216,216,253,253,253,255,177,210,144,144,144,152,60,0,180,100,0,208,140,0,236,180,0,168,84,0,217,1,1,189,1,1,165,1,1,200,0,0,172,0,0,218,2,2,190,2,2,166,2,2,255,0,251,234,0,222,207,0,196,82,82,194,106,106,250,146,146,246,80,80,192,107,107,251,147,147,247,149,137,1,136,124,0,124,112,0,116,100,0,132,92,40,160,132,72,188,176,104,216,220,136,248,248,188,244,244,252,253,1,1,248,24,4,255,0,251,255,0,244,248,108,20,248,136,24,248,164,32,248,192,36,248,220,40,245,233,61,244,244,80,244,244,112,244,244,148,240,240,180,240,240,212,255,226,219,46,134,46,63,175,63,114,190,114,47,135,47,64,176,64,115,191,115,255,35,255,244,124,124,255,172,246,104,104,248,148,148,248,184,184,244,144,144,244,65,177,65,116,192,116,164,212,164,112,188,112,148,136,0,136,116,0,124,96,0,112,76,0,100,56,0,89,41,1,137,108,151,144,144,192,188,188,248,200,200,244,220,220,244,40,112,40,44,132,44,52,152,52,60,172,60,252,200,200,245,165,165,248,92,92,245,77,77,244,60,60,244,76,76,244,92,92,244,164,164,92,119,102,89,128,103,80,136,100,72,150,100,11,21,5,28,64,42,29,59,40,22,37,13,252,252,252,221,221,221,189,189,189,158,158,158,124,124,124,156,156,156,188,188,188,220,220,220,108,76,44,124,84,48,140,96,56,156,108,64,172,120,72,0,0,0,40,36,8,80,76,20,120,116,28,160,152,40,200,192,48,244,232,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,254,2,2,252,36,0,252,72,0,252,108,0,252,144,0,252,180,0,252,216,0,252,252,0,168,240,0,84,232,0,0,224,0,252,0,0,232,4,20,249,0,255,196,20,68,180,24,88,160,32,112,144,40,136,124,44,156,108,52,180,88,60,204,72,68,228])
 })
 mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/frog_material_edit.png",{
-    ctf: [
+    modes: { ctf: [
         // spawn flag left
         (new CTFSettings())
             .addFlagGreenSpawn(544, 83)   
@@ -571,12 +609,12 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/frog_material_ed
             .addBlueSpawn(553, 972)
             .addFlagBlueSpawn(510, 1016)
             //.addAttackSpawn(1120, 410),
-        ],
+        ],},
     palette:true,
     materials: defaultMaterials.map(noUndef).map(replaceMatIndexBy(MATERIAL.BG,..._range(189,208)))
 })
 mapSettings.set("kangaroo/JDM.png",{
-    ctf: [
+    modes: {ctf: [
         // spawn flag left
         (new CTFSettings())
             .addFlagGreenSpawn(113, 118)   
@@ -591,11 +629,11 @@ mapSettings.set("kangaroo/JDM.png",{
             .addBlueSpawn(829, 487)
             .addFlagBlueSpawn(770, 493)
             //.addAttackSpawn(1120, 410),
-        ]
+        ]},
 })
 mapSettings.set("dsds/spaceshipint.png", 
     {
-        dtf:[
+        modes: {  dtf:[
         [
             [0,416,447],
             [1,590,450],
@@ -606,13 +644,13 @@ mapSettings.set("dsds/spaceshipint.png",
             [1,1106,318],
             [2,447, 444],
         ],
-     ] 
+     ] },
     }
 )
 
 mapSettings.set("dsds/frog_cave_cave_only.png", 
     {
-        dtf:[
+        modes: {dtf:[
         [
             [0,113,29],
             [1,109,176],
@@ -623,13 +661,13 @@ mapSettings.set("dsds/frog_cave_cave_only.png",
             [1,1022,353],
             [2,113,29],
         ],
-     ] 
+     ] },
     }
 )
 
 mapSettings.set("kangaroo/JetmenRevival/GardenSmall.png", 
     {      
-     ctf: [
+        modes: {ctf: [
             (new CTFSettings())
                 .addFlagBlueSpawn(219, 648)   
 
@@ -644,13 +682,13 @@ mapSettings.set("kangaroo/JetmenRevival/GardenSmall.png",
                 .addGreenSpawn(679, 646)
                 .addGreenSpawn(585, 600)
                 
-            ],
+            ],},
     }
 )
 
 mapSettings.set("kangaroo/JetmenRevival/LunarDigSmall.png", 
     {      
-     ctf: [
+        modes: {ctf: [
             (new CTFSettings())
                 .addFlagBlueSpawn(723, 733)   
                 .addBlueSpawn(723, 733)   
@@ -663,13 +701,13 @@ mapSettings.set("kangaroo/JetmenRevival/LunarDigSmall.png",
                 .addGreenSpawn(723, 733)  
                 
                 .setOrder(true)
-            ],
+            ],},
     }
 )
 
 mapSettings.set("kangaroo/JetmenRevival/MountDoomSmall.png", 
     {      
-     ctf: [
+        modes: {ctf: [
             (new CTFSettings())
                 .addFlagBlueSpawn(73, 114)   
                 .addBlueSpawn(73, 114)        
@@ -685,13 +723,13 @@ mapSettings.set("kangaroo/JetmenRevival/MountDoomSmall.png",
                 .addFlagGreenSpawn(769, 258)
                 .addGreenSpawn(769, 258)
                 .setOrder(CTFSettings.ORDER.RANDOM_SAME_INDEX)
-            ],
+            ],},
     }
 )
 
 mapSettings.set("kangaroo/JetmenRevival/PostNukeSmall.png", 
     {      
-     ctf: [
+        modes: {ctf: [
             (new CTFSettings())
                 .addFlagBlueSpawn(178, 157)   
                 .addBlueSpawn(178, 157)    
@@ -705,14 +743,14 @@ mapSettings.set("kangaroo/JetmenRevival/PostNukeSmall.png",
                 .addGreenSpawn(713, 525)
         
                 .setOrder(CTFSettings.ORDER.RANDOM_SAME_INDEX)
-            ],
+            ],},
     }
 )
 
 
 mapSettings.set("kangaroo/JetmenRevival/CaveDot.png", 
     {
-        dtf:[
+        modes: {dtf:[
         [
             [0,651,383],
             [1,550,479],
@@ -732,7 +770,7 @@ mapSettings.set("kangaroo/JetmenRevival/CaveDot.png",
 
                 .addGreenSpawn(305, 168)
                 .addFlagGreenSpawn(140, 106)
-            ],
+            ],},
         materials: defaultMaterials.map(noUndef),
         colorAnim: false
     }
@@ -742,7 +780,7 @@ mapSettings.set("kangaroo/JetmenRevival/CaveDot.png",
 
 mapSettings.set("PiPitek/SHAARK4.png", 
     {
-        dtf:[
+        modes: { dtf:[
         (new DTFSettings())
             .addFlagSpawn(36,173)
             .addDefenseSpawn(39,144)
@@ -751,7 +789,7 @@ mapSettings.set("PiPitek/SHAARK4.png",
             .addFlagSpawn(486,150)
             .addDefenseSpawn(447,114)
             .addAttackSpawn(59,337),
-     ],
+     ],},
      objects: (() => {
         let obj = [{type:"water", x:60, y:340}]
         
@@ -779,7 +817,7 @@ mapSettings.set("PiPitek/SHAARK4.png",
 
 mapSettings.set("dsds/weblieroZ/pilaf.png", 
     {
-        dtf:[
+        modes: {dtf:[
         [
             [0,920,175],
             [1,748,145],
@@ -790,7 +828,7 @@ mapSettings.set("dsds/weblieroZ/pilaf.png",
             [1,198,140],
             [2,894,456],
         ],
-     ],
+     ],},
      materials: defaultMaterials.map(noUndef)
     }
 )
@@ -800,13 +838,13 @@ mapSettings.set("dsds/weblieroZ/pilaf.png",
 
 mapSettings.set("qmaps/qmap20.png", 
     {
-        dtf:[
+        modes: { dtf:[
         [
             [0,94,373],
             [1,204,343],
             [2,613,41],
         ]
-     ] 
+     ] },
     }
 )
 /*
@@ -824,7 +862,7 @@ mapSettings.set("qmaps/qmap15.png",
 */
 mapSettings.set("wgetch/flag/electron-flag.png", 
     {
-        dtf:[
+        modes: { dtf:[
         [
             [0,830,345],
             [1,870,345],
@@ -852,14 +890,14 @@ mapSettings.set("wgetch/flag/electron-flag.png",
              .addBlueSpawn(861, 503)
 
 
-         ],
+         ],},
     materials: defaultMaterials.map(noUndef)
     }
 )
 
 mapSettings.set("wgetch/flag/dens-flag.png", 
     {
-     ctf: [
+        modes: {  ctf: [
          
          (new CTFSettings())
              .addFlagGreenSpawn(274, 217)   
@@ -870,13 +908,13 @@ mapSettings.set("wgetch/flag/dens-flag.png",
              .addBlueSpawn(380, 418)
              .addFlagBlueSpawn(429, 429)             
 
-         ],
+         ],},
     materials: defaultMaterials.map(noUndef)
     }
 )
 mapSettings.set("wgetch/flag/forts-flag.png", 
     {
-     ctf: [
+        modes: {ctf: [
          
          (new CTFSettings())
              .addBlueSpawn(269, 208)
@@ -920,7 +958,7 @@ mapSettings.set("wgetch/flag/forts-flag.png",
              .addFlagGreenSpawn(701, 255)             
              .addFlagGreenSpawn(765, 330)           
 
-         ],
+         ],},
     }
 )
 

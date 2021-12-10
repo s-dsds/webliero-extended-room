@@ -21,6 +21,13 @@ window.WLROOM.onGameStart = () => {
     }
 }
 
+window.WLROOM.onGameTick = (g) => {    
+    if (mapTickHandler) {
+        mapTickHandler(g)
+    }
+    WLX.update()
+}
+
 function announce(msg, player, color, style) {
 	window.WLROOM.sendAnnouncement(msg, typeof player =='undefined' || player == null?null:player.id, color!=null?color:0xb2f1d3, style !=null?style:"", 1);
 }
