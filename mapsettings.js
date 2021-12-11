@@ -80,16 +80,16 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/evil_flag_map.pn
             obj.push({type:"lava", x:x, y:330})
         }
 
-        // obj.push({ wlx:"laser", wobject:62,x:1,y:2,freq:0,dist:1,speed:1, angle: 0}) // laser cutter,
+        obj.push({ wlx:"laser", wobject:62,x:1,y:2,freq:0,dist:1,speed:1, angle: 0}) // laser cutter,
        
-        // obj.push({ wlx:"laser", wobject:62,x:2,y:2,freq:0,dist:1,speed:3, angle: down}) // laser cutter,
-        // obj.push({ wlx:"laser", wobject:62,x:501,y:2,freq:0,dist:1,speed:3, angle: down}) // laser cutter,
+        obj.push({ wlx:"laser", wobject:62,x:2,y:2,freq:0,dist:1,speed:3, angle: down}) // laser cutter,
+        obj.push({ wlx:"laser", wobject:62,x:501,y:2,freq:0,dist:1,speed:3, angle: down}) // laser cutter,
 
-        // obj.push({ wlx:"laser", wobject:63,x:93,y:123,freq:0,dist:1,speed:1, angle: up}) // green,
-        // obj.push({ wlx:"laser", wobject:63,x:115,y:41,freq:0,dist:1,speed:1, angle: up}) // green,
+        obj.push({ wlx:"laser", wobject:63,x:93,y:123,freq:0,dist:1,speed:1, angle: up}) // green,
+        obj.push({ wlx:"laser", wobject:63,x:115,y:41,freq:0,dist:1,speed:1, angle: up}) // green,
 
-        // obj.push({ wlx:"laser", wobject:64,x:409,y:123,freq:0,dist:1,speed:1, angle: up}) // blue,        
-        // obj.push({ wlx:"laser", wobject:64,x:387,y:41,freq:0,dist:1,speed:1, angle: up}) // blue,        
+        obj.push({ wlx:"laser", wobject:64,x:409,y:123,freq:0,dist:1,speed:1, angle: up}) // blue,        
+        obj.push({ wlx:"laser", wobject:64,x:387,y:41,freq:0,dist:1,speed:1, angle: up}) // blue,        
        
         return obj
      }),    
