@@ -27,7 +27,7 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/evil_flag_map.pn
             .addGreenSpawn(60, 15)
            
             .addFlagBlueSpawn(408, 30) 
-            .addBlueSpawn(60, 15)
+            .addBlueSpawn(436, 10)
             
         ],},
     materials: defaultMaterials.map(noUndef),    
@@ -40,16 +40,30 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/evil_flag_map.pn
         let obj = []
         obj.push({type:"platform", id: 80, x:44, y:160, angle: up, speed: 0.2})
         obj.push({type:"platform", id: 81, x:462, y:160, angle: down, speed:0.2})
-
-        let wobbly = {
-            82:{x:190, y:100},
-            83:{x:310, y:100},
-            84:{x:190, y:200},
-            85:{x:310, y:200},
-        }
-        for (let id in wobbly) {
-            obj.push({type:"platform_small_wobbly", id: id, x:wobbly[id].x, y:wobbly[id].y})
-        }
+        obj.push({wlx:"platform", form:"square", id: 82, x:158, y:158, angle: right, speed:0.2, steps:
+            [
+                ["x","more_than",345,down],     
+                ["y","more_than",242,left], 
+                ["x","lower_than",158,up],      
+                ["y","lower_than",160,right],      
+            ]
+        })
+        obj.push({wlx:"platform", form:"square", id: 83, x:331, y:172, angle: left, speed:0.2, steps:
+            [
+                ["x","lower_than",172,down],     
+                ["y","more_than",227,right], 
+                ["x","more_than",331,up],      
+                ["y","lower_than",172,left],      
+            ]
+        })
+        obj.push({wlx:"platform", form:"square", id: 84, x:190, y:212, angle: right, speed:0.2, steps:
+            [
+                ["x","more_than",312,up, 0.5],     
+                ["y","lower_than",190,left, 0.1], 
+                ["x","lower_than",190,down, 0.4],      
+                ["y","more_than",212,right, 0.3],      
+            ]
+        })
         
         for (let x = 10; x<=500;x+=35) {
             obj.push({type:"lava", x:x, y:330})
@@ -65,8 +79,7 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/evil_flag_map.pn
 
         obj.push({ wlx:"laser", wobject:64,x:409,y:123,freq:0,dist:1,speed:1, angle: up}) // blue,        
         obj.push({ wlx:"laser", wobject:64,x:387,y:41,freq:0,dist:1,speed:1, angle: up}) // blue,        
-
-       // obj.push({type:"platform_small_wobbly", x:207, y:226})
+       
         return obj
      }),
      onGameTick: (() => {
@@ -82,12 +95,7 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/evil_flag_map.pn
                     const leftD = [down, up]
                     const rightD = [up, down]
 
-                    // let wobbly = {
-                    //     82:{x:190, y:100, ref:null},
-                    //     83:{x:310, y:100, ref:null},
-                    //     84:{x:190, y:200, ref:null},
-                    //     85:{x:310, y:200, ref:null},
-                    // }
+
 
                     return (g) => {     
                         if (!leftPlat) {
@@ -105,16 +113,7 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/evil_flag_map.pn
                             window.WLROOM.changeObjectDirection(81, rightD[rightI], 0.2)
                             rightI = rightI==1?0:rightI+1
                         }
-                        // for (let id in wobbly) {
-                        //         if (!wobbly[id].ref) {
-                        //             wobbly[id].ref = window.WLROOM.getObject(id)
-                        //         }
 
-                        //         if (Math.abs(wobbly[id].x-wobbly[id].ref.x)>50 || Math.abs(wobbly[id].y-wobbly[id].ref.y)>50) {
-                        //             console.log("reposition", id,wobbly[id].x,wobbly[id].y,wobbly[id].ref.x,wobbly[id].ref.y, Math.abs(wobbly[id].x-wobbly[id].ref.x),Math.abs(wobbly[id].y-wobbly[id].ref.y) )                                   
-                        //             window.WLROOM.moveObject(id, wobbly[id].x, wobbly[id].y)
-                        //         }
-                        // }
                 }
             })     
     // layers: {

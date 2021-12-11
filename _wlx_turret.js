@@ -144,12 +144,78 @@ class WLX_Teleport {
 
 }
 
+class WLX_Platform {		
+	
+	static create(o){
+		let t = new WLX_Platform();
+		for(let k in o) t[k]=o[k];				
+		if(!WLX_Platform.list) { WLX_Platform.list=[]; }
+        if (t.id && t.steps && t.steps.length>0) {
+            t.currentIdx = 0;
+            t.maxIdx = t.steps.length-1
+            t.ref = null;
+        }
+
+        o.wobject =  WLX_Platform.getWObject(o.form)
+        o.type = 1
+        window.WLROOM.createObject(o)
+
+		WLX_Platform.list.push(t);
+	}
+	
+	static clear(){
+		WLX_Platform.list=null;
+	}
+    static getWObject(type) {
+        switch (type) { 
+            case "square":
+                return 57;
+            case "classic":
+                return 59;            
+            case "wobbly":
+                return 60;
+            case "small_wobbly":
+                return 61;
+            default:
+                return type;
+        }
+    }
+	static shouldGoNext(t, step) {              
+        switch (step[1]) {
+            case "lower_than": 
+                return t.ref[step[0]]<=step[2];                
+            case "more_than":
+                return t.ref[step[0]]>=step[2];
+        }
+
+    }
+	static update(){
+		if(!WLX_Platform.list) { return; }
+        WLX_Platform.list.forEach(t=>{				
+            if(!t.id || !t.steps || !t.steps.length) { return; }
+            if (!t.ref) {
+                t.ref = window.WLROOM.getObject(t.id)
+            }
+            const step = t.steps[t.currentIdx]
+
+            if (WLX_Platform.shouldGoNext(t, step)) {                                                        
+                window.WLROOM.changeObjectDirection(t.id, step[3], step[4]??t.speed)                
+                t.currentIdx = t.currentIdx==t.maxIdx?0:t.currentIdx+1
+            }
+            
+        });
+	
+	}
+
+}
+
 class WLX {
 	static update(){
 		WLX_Turret.update();
 		WLX_Teleport.update();
         WLX_Directional_Fire.update();    
-        WLX_Laser.update();    
+        WLX_Laser.update(); 
+        WLX_Platform.update();  
 	}	
 	static createTurret(o){
 		WLX_Turret.create(o);
@@ -171,6 +237,9 @@ class WLX {
             case "laser":
                 WLX_Laser.create(o);
                 break;
+            case "platform":
+                WLX_Platform.create(o)
+                break;
         }
     }
     static clear() {
@@ -178,6 +247,7 @@ class WLX {
         WLX_Teleport.clear();
         WLX_Directional_Fire.clear();
         WLX_Laser.clear();
+        WLX_Platform.clear();
     }
 }
 
