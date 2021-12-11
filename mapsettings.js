@@ -38,8 +38,19 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/evil_flag_map.pn
         const left = WLPI
         
         let obj = []
-        obj.push({type:"platform", id: 80, x:44, y:160, angle: up, speed: 0.2})
-        obj.push({type:"platform", id: 81, x:462, y:160, angle: down, speed:0.2})
+
+        obj.push({wlx:"platform", form:"classic", id: 80, x:44, y:160, angle: right, speed:0.2, steps:
+        [
+            ["y","lower_than",60,down],     
+            ["y","more_than",280,up],               
+        ]
+        })
+        obj.push({wlx:"platform", form:"classic", id: 81, x:462, y:160, angle: down, speed:0.2, steps:
+        [
+            ["y","more_than",280,up],  
+            ["y","lower_than",60,down],                              
+        ]
+        })
         obj.push({wlx:"platform", form:"square", id: 82, x:158, y:158, angle: right, speed:0.2, steps:
             [
                 ["x","more_than",345,down],     
@@ -70,7 +81,7 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/evil_flag_map.pn
         }
 
         obj.push({ wlx:"laser", wobject:62,x:1,y:2,freq:0,dist:1,speed:1, angle: 0}) // laser cutter,
-       // obj.push({ wlx:"laser", wobject:62,x:503,y:4,freq:0,dist:1,speed:2, angle: WLPI}) // laser cutter,
+       
         obj.push({ wlx:"laser", wobject:62,x:2,y:2,freq:0,dist:1,speed:3, angle: down}) // laser cutter,
         obj.push({ wlx:"laser", wobject:62,x:501,y:2,freq:0,dist:1,speed:3, angle: down}) // laser cutter,
 
@@ -81,41 +92,7 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/evil_flag_map.pn
         obj.push({ wlx:"laser", wobject:64,x:387,y:41,freq:0,dist:1,speed:1, angle: up}) // blue,        
        
         return obj
-     }),
-     onGameTick: (() => {
-                    let leftPlat = null
-                    let rightPlat = null
-                    let leftI = 0
-                    let rightI = 0
-                    const up = WLPI/2*3
-                    const down = WLPI/2
-                    const right = 0
-                    const left = WLPI
-
-                    const leftD = [down, up]
-                    const rightD = [up, down]
-
-
-
-                    return (g) => {     
-                        if (!leftPlat) {
-                            leftPlat = window.WLROOM.getObject(80)
-                        }   
-                        if (!rightPlat) {
-                            rightPlat = window.WLROOM.getObject(81)
-                        }                                                           
-                        if ([(leftPlat.y<=60),(leftPlat.y>=280)][leftI]) {                                                        
-                            window.WLROOM.changeObjectDirection(80, leftD[leftI], 0.2)
-                            leftI = leftI==1?0:leftI+1
-                        }
-                                                
-                        if ([(rightPlat.y>=280),(rightPlat.y<=60)][rightI]) {
-                            window.WLROOM.changeObjectDirection(81, rightD[rightI], 0.2)
-                            rightI = rightI==1?0:rightI+1
-                        }
-
-                }
-            })     
+     }),    
     // layers: {
     //     "front":"same"
     // }
