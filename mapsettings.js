@@ -39,7 +39,7 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/evil_flag_map.pn
         
         let obj = []
 
-        obj.push({wlx:"platform", form:"classic", id: 80, x:44, y:160, angle: right, speed:0.2, steps:
+        obj.push({wlx:"platform", form:"classic", id: 80, x:44, y:160, angle: up, speed:0.2, steps:
         [
             ["y","lower_than",60,down],     
             ["y","more_than",280,up],               
