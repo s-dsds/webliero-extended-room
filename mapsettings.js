@@ -828,6 +828,10 @@ mapSettings.set("kangaroo/JetmenRevival/PostNukeSmall.png",
         
                 .setOrder(CTFSettings.ORDER.RANDOM_SAME_INDEX)
             ],},
+        objects: [
+           {wlx:"teleport",x:4,y:224,dist:2,toX:750,toY:224},
+           {wlx:"teleport",x:794,y:224,dist:2,toX:40,toY:224}
+        ]
     }
 )
 
