@@ -70,7 +70,7 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/evil_flag_map.pn
         }
 
         obj.push({ wlx:"laser", wobject:62,x:1,y:2,freq:0,dist:1,speed:1, angle: 0}) // laser cutter,
-        obj.push({ wlx:"laser", wobject:62,x:503,y:4,freq:0,dist:1,speed:2, angle: WLPI}) // laser cutter,
+       // obj.push({ wlx:"laser", wobject:62,x:503,y:4,freq:0,dist:1,speed:2, angle: WLPI}) // laser cutter,
         obj.push({ wlx:"laser", wobject:62,x:2,y:2,freq:0,dist:1,speed:3, angle: down}) // laser cutter,
         obj.push({ wlx:"laser", wobject:62,x:501,y:2,freq:0,dist:1,speed:3, angle: down}) // laser cutter,
 
