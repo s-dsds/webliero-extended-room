@@ -80,16 +80,25 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/evil_flag_map.pn
             obj.push({type:"lava", x:x, y:330})
         }
 
-        obj.push({ wlx:"laser", wobject:62,x:1,y:2,freq:0,dist:1,speed:1, angle: 0}) // laser cutter,
-       
-        obj.push({ wlx:"laser", wobject:62,x:2,y:2,freq:0,dist:1,speed:3, angle: down}) // laser cutter,
-        obj.push({ wlx:"laser", wobject:62,x:501,y:2,freq:0,dist:1,speed:3, angle: down}) // laser cutter,
+        obj.push({ type:64,x:2,y:2,speed:0}) // green down,
+        obj.push({ type:66,x:248,y:2,speed:0.0001, angle: left}) // green left,
+        obj.push({ type:65,x:501,y:2,speed:0}) // blue down,
+        obj.push({ type:67,x:256,y:2,speed:0.0001, angle: right}) // blue right,
 
-        obj.push({ wlx:"laser", wobject:63,x:93,y:123,freq:0,dist:1,speed:1, angle: up}) // green,
-        obj.push({ wlx:"laser", wobject:63,x:115,y:41,freq:0,dist:1,speed:1, angle: up}) // green,
+        obj.push({ type:62,x:93,y:123,speed:0}) // green up,
+        obj.push({ type:62,x:115,y:41,speed:0}) // green up,
 
-        obj.push({ wlx:"laser", wobject:64,x:409,y:123,freq:0,dist:1,speed:1, angle: up}) // blue,        
-        obj.push({ wlx:"laser", wobject:64,x:387,y:41,freq:0,dist:1,speed:1, angle: up}) // blue,        
+        obj.push({ type:63,x:409,y:123,speed:0}) // blue up,
+        obj.push({ type:63,x:387,y:41,speed:0}) // blue up,
+
+        // obj.push({ wlx:"laser", wobject:63,x:2,y:2,freq:0,dist:1,speed:3, angle: down}) // laser cutter,
+        // obj.push({ wlx:"laser", wobject:64,x:501,y:2,freq:0,dist:1,speed:3, angle: down}) // laser cutter,
+
+        // obj.push({ wlx:"laser", wobject:65,x:93,y:123,freq:0,dist:1,speed:1, angle: up}) // green,
+        // obj.push({ wlx:"laser", wobject:65,x:115,y:41,freq:0,dist:1,speed:1, angle: up}) // green,
+
+        // obj.push({ wlx:"laser", wobject:64,x:409,y:123,freq:0,dist:1,speed:1, angle: up}) // blue,        
+        // obj.push({ wlx:"laser", wobject:64,x:387,y:41,freq:0,dist:1,speed:1, angle: up}) // blue,        
        
         return obj
      }),    
@@ -655,7 +664,8 @@ mapSettings.set("dsds/weblieroZ/kameshouseint.png",{
         ],},
     palette: true,
     materials: defaultMaterials.map(noUndef).map(replaceMatIndexBy(MATERIAL.BG,1,2)),
-    colorAnim: false
+    colorAnim: false,
+    backgroundLayer: "true"
 })
 mapSettings.set("wgetch/labs/jambon.png",{
     modes: {ctf: [
@@ -695,7 +705,8 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/frog_material_ed
             //.addAttackSpawn(1120, 410),
         ],},
     palette:true,
-    materials: defaultMaterials.map(noUndef).map(replaceMatIndexBy(MATERIAL.BG,..._range(189,208)))
+    materials: defaultMaterials.map(noUndef).map(replaceMatIndexBy(MATERIAL.BG,..._range(189,208))),
+    backgroundLayer: "https://sylvodsds.gitlab.io/webliero-maps/dsds/frog_material_edit_bg.png"
 })
 mapSettings.set("kangaroo/JDM.png",{
     modes: {ctf: [
