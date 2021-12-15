@@ -1,8 +1,0 @@
-const CONFIG = {
-    admins: [""],
-    hidden: [""], /* users not given admin on joining the room but able to get admin by typing !admin */
-    discord_invite: "https://discord.gg/hW9UCgR",
-    public: false,
-    room_name:  "🪱Extended⚠️read this: bit.ly/lieroX",
-    room_motd:  "Welcome to an experiment in liero hacking",
-};
