@@ -101,7 +101,7 @@ mapSettings.set("https://sylvodsds.gitlab.io/webliero-maps/dsds/evil_flag_map.pn
         // obj.push({ wlx:"laser", wobject:64,x:387,y:41,freq:0,dist:1,speed:1, angle: up}) // blue,        
        
         return obj
-     }),    
+     })(),    
     // layers: {
     //     "front":"same"
     // }
